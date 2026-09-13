@@ -1,708 +1,631 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SoloHaven - Active Comfort Companion</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap');
-    
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #fcfbf9;
-      color: #334155;
-    }
-    .serif {
-      font-family: 'Playfair Display', serif;
-    }
-    .card-shadow {
-      filter: drop-shadow(0px 8px 20px rgba(148, 163, 184, 0.12));
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 5px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #f1f5f9;
-      border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoloHaven — Active Comfort & Focus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #f7f5f0;
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --bg-card-hover: rgba(255, 255, 255, 0.9);
+            --text-primary: #2d312e;
+            --text-secondary: #636b65;
+            --accent-soft: #e8efe9;
+            --accent-border: #d2ddd4;
+            --accent-glow: #8fa89b;
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.03);
+            --radius-main: 24px;
+            --radius-sm: 16px;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: var(--transition-smooth);
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(225, 235, 228, 0.5) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(238, 232, 223, 0.5) 0px, transparent 50%);
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 880px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: var(--radius-main);
+            padding: 40px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        /* Mood Selection */
+        .section-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 36px;
+        }
+
+        .mood-btn {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--accent-border);
+            padding: 16px 20px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .mood-btn:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .mood-btn.active {
+            background: var(--text-primary);
+            color: #ffffff;
+            border-color: var(--text-primary);
+        }
+
+        /* Options Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            background: #ffffff;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            border-color: var(--accent-border);
+        }
+
+        .card-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .card-action {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Active Date Experience */
+        .date-view {
+            display: none;
+            background: #ffffff;
+            border-radius: var(--radius-sm);
+            padding: 32px;
+            border: 1px solid var(--accent-border);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .date-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--accent-soft);
+        }
+
+        .date-tag {
+            display: inline-block;
+            background: var(--accent-soft);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .date-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+        }
+
+        .recipe-box {
+            background: var(--bg-base);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .recipe-task {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .recipe-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Controls / External Link */
+        .external-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-soft);
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: var(--transition-smooth);
+        }
+
+        .external-btn:hover {
+            background: var(--accent-border);
+        }
+
+        /* Timer Section */
+        .timer-container {
+            text-align: center;
+            padding: 24px 0;
+            background: rgba(247, 245, 240, 0.5);
+            border-radius: var(--radius-sm);
+            margin-bottom: 24px;
+        }
+
+        .timer-display {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin: 12px 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-btn {
+            background: var(--text-primary);
+            color: #ffffff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .timer-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .done-btn {
+            width: 100%;
+            background: #2d312e;
+            color: #ffffff;
+            border: none;
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .done-btn:hover {
+            opacity: 0.95;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        /* Utilities */
+        .hidden { display: none !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .app-container { padding: 24px; }
+            .mood-grid { grid-template-columns: 1fr; }
+            .options-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-pink-100 pb-12">
+<body>
 
-  <!-- Header -->
-  <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-stone-100 px-4 py-3 sm:px-8">
-    <div class="max-w-4xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 font-bold text-lg shadow-sm">
-          S
-        </div>
-        <div>
-          <h1 class="serif text-2xl font-bold tracking-tight text-stone-800">SoloHaven</h1>
-          <p class="text-[10px] text-stone-400 font-medium tracking-wider uppercase">Active Comfort & Calming Sanctuary</p>
-        </div>
-      </div>
+<div class="app-container">
+    <header>
+        <h1>SoloHaven</h1>
+        <p class="subtitle">Gentle active-comfort pairings for low-stress focus</p>
+    </header>
 
-      <div class="flex items-center gap-2">
-        <button id="resetAppBtn" onclick="resetApp()" class="text-xs text-stone-400 hover:text-stone-600 px-3 py-1.5 rounded-full border border-stone-200 hover:bg-stone-50 transition">
-          Reset Mood
-        </button>
-      </div>
+    <!-- Main View -->
+    <div id="main-view">
+        <div class="section-title">Select your current mood</div>
+        <div class="mood-grid" id="mood-selector"></div>
+
+        <div class="section-title">Choose your active pairing</div>
+        <div class="options-grid" id="options-container"></div>
     </div>
-  </header>
 
-  <!-- Main Container -->
-  <main class="max-w-4xl mx-auto w-full px-4 sm:px-6 pt-6 flex-1 flex flex-col gap-8">
-
-    <!-- STEP 1: MOOD SELECTOR -->
-    <section id="moodSection" class="bg-white rounded-3xl p-6 sm:p-8 card-shadow border border-stone-100 text-center">
-      <span class="text-xs font-bold text-rose-400 uppercase tracking-widest">Step 1</span>
-      <h2 class="serif text-2xl font-bold text-stone-800 mt-1 mb-2">How are you feeling right now?</h2>
-      <p class="text-xs text-stone-500 max-w-md mx-auto mb-6">Select your state of mind to open a focused 30–45 minute active comfort recipe.</p>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-        <button onclick="selectMood('homesick')" class="p-4 rounded-2xl border border-pink-100 bg-pink-50/40 hover:bg-pink-100/60 transition text-left flex items-start gap-3 group">
-          <span class="text-2xl">🌸</span>
-          <div>
-            <div class="text-sm font-bold text-stone-800 group-hover:text-pink-900">Homesick & Missing Home</div>
-            <div class="text-[11px] text-stone-500 mt-0.5">Warm, comforting, gentle grounding energy.</div>
-          </div>
-        </button>
-
-        <button onclick="selectMood('blank')" class="p-4 rounded-2xl border border-purple-100 bg-purple-50/40 hover:bg-purple-100/60 transition text-left flex items-start gap-3 group">
-          <span class="text-2xl">🌫️</span>
-          <div>
-            <div class="text-sm font-bold text-stone-800 group-hover:text-purple-900">Feeling Blank & Depressed</div>
-            <div class="text-[11px] text-stone-500 mt-0.5">Low barrier comfort without pressure.</div>
-          </div>
-        </button>
-
-        <button onclick="selectMood('worried')" class="p-4 rounded-2xl border border-amber-100 bg-amber-50/40 hover:bg-amber-100/60 transition text-left flex items-start gap-3 group">
-          <span class="text-2xl">⚡</span>
-          <div>
-            <div class="text-sm font-bold text-stone-800 group-hover:text-amber-900">Too Stimulated & Worried</div>
-            <div class="text-[11px] text-stone-500 mt-0.5">Double-tasking to quiet racing thoughts.</div>
-          </div>
-        </button>
-
-        <button onclick="selectMood('anxious')" class="p-4 rounded-2xl border border-sky-100 bg-sky-50/40 hover:bg-sky-100/60 transition text-left flex items-start gap-3 group">
-          <span class="text-2xl">🌧️</span>
-          <div>
-            <div class="text-sm font-bold text-stone-800 group-hover:text-sky-900">Overwhelmed & Anxious</div>
-            <div class="text-[11px] text-stone-500 mt-0.5">Slow-paced calming focus & light structure.</div>
-          </div>
-        </button>
-
-        <button onclick="selectMood('bored')" class="p-4 rounded-2xl border border-emerald-100 bg-emerald-50/40 hover:bg-emerald-100/60 transition text-left flex items-start gap-3 group">
-          <span class="text-2xl">🍃</span>
-          <div>
-            <div class="text-sm font-bold text-stone-800 group-hover:text-emerald-900">Restless & Seeking Focus</div>
-            <div class="text-[11px] text-stone-500 mt-0.5">Engaging media paired with productivity.</div>
-          </div>
-        </button>
-
-        <button onclick="selectMood('night')" class="p-4 rounded-2xl border border-indigo-100 bg-indigo-50/40 hover:bg-indigo-100/60 transition text-left flex items-start gap-3 group">
-          <span class="text-2xl">🌙</span>
-          <div>
-            <div class="text-sm font-bold text-stone-800 group-hover:text-indigo-900">Late Night Quiet Energy</div>
-            <div class="text-[11px] text-stone-500 mt-0.5">Peaceful, cozy hostel room rituals.</div>
-          </div>
-        </button>
-      </div>
-    </section>
-
-    <!-- STEP 2: 4-WAY MEDIA OPTIONS (Hidden initially) -->
-    <section id="mediaSection" class="hidden flex flex-col gap-4">
-      <div class="flex items-center justify-between">
-        <div>
-          <span class="text-xs font-bold text-rose-400 uppercase tracking-widest">Step 2</span>
-          <h3 id="selectedMoodTitle" class="serif text-xl font-bold text-stone-800">Pick your Active Comfort Medium</h3>
-        </div>
-        <span class="text-xs bg-rose-50 text-rose-700 font-semibold px-3 py-1 rounded-full border border-rose-100">
-          Duration: 30–45 mins
-        </span>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="mediaCardsGrid">
-        <!-- Populated dynamically by JS -->
-      </div>
-    </section>
-
-    <!-- STEP 3: ACTIVE SOLO DATE DASHBOARD (Hidden initially) -->
-    <section id="dateDashboard" class="hidden flex flex-col gap-6">
-      
-      <!-- Date Recipe Card -->
-      <div class="bg-gradient-to-br from-stone-900 to-stone-800 text-white rounded-3xl p-6 sm:p-8 card-shadow relative overflow-hidden">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-stone-700/60 pb-5 mb-5">
-          <div>
-            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest flex items-center gap-1.5 mb-1">
-              <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i> Your 30–45 Min Active Comfort Recipe
-            </span>
-            <h2 id="recipeTitle" class="serif text-2xl font-bold text-white">---</h2>
-          </div>
-          <div class="flex items-center gap-2">
-            <a id="externalMediaBtn" href="#" target="_blank" class="px-4 py-2 bg-emerald-400 hover:bg-emerald-300 text-stone-950 font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm">
-              <span id="externalMediaBtnText">Open Media</span>
-              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-            </a>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Media Focus -->
-          <div class="bg-stone-800/70 rounded-2xl p-4 border border-stone-700/50">
-            <div class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-              <i data-lucide="tv" class="w-3.5 h-3.5 text-rose-300"></i> Single Recommendation
+    <!-- Active Cozy Date View -->
+    <div id="date-view" class="date-view">
+        <div class="date-header">
+            <div>
+                <span class="date-tag" id="view-type">Media</span>
+                <h2 class="date-title" id="view-title">Title</h2>
+                <div class="card-meta" id="view-meta" style="margin-top: 4px;">Meta</div>
             </div>
-            <div id="recipeMediaDetail" class="text-base font-bold text-stone-100 mb-1">---</div>
-            <div id="recipeMediaSub" class="text-xs text-stone-400">---</div>
-          </div>
-
-          <!-- Active Task Focus -->
-          <div class="bg-stone-800/70 rounded-2xl p-4 border border-stone-700/50">
-            <div class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-              <i data-lucide="check-square" class="w-3.5 h-3.5 text-emerald-300"></i> Productivity Pairing
-            </div>
-            <div id="recipeTaskDetail" class="text-base font-bold text-emerald-300 mb-1">---</div>
-            <div id="recipeTaskSub" class="text-xs text-stone-400">---</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Built-In Comfort Tools Workspace -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        <!-- TOOL 1: Built-in 30-45m Focus Timer -->
-        <div class="lg:col-span-5 bg-white rounded-3xl p-6 border border-stone-100 card-shadow flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-center mb-4">
-              <span class="text-xs font-bold text-stone-400 uppercase tracking-wider flex items-center gap-1.5">
-                <i data-lucide="timer" class="w-4 h-4 text-stone-600"></i> Session Timer
-              </span>
-              <div class="flex gap-1">
-                <button onclick="setTimerDuration(30)" class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 transition">30m</button>
-                <button onclick="setTimerDuration(45)" class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 transition">45m</button>
-              </div>
-            </div>
-
-            <div class="text-center my-4">
-              <div id="timerDisplay" class="text-5xl font-extrabold font-mono tracking-tight text-stone-800">
-                30:00
-              </div>
-              <p id="timerStatus" class="text-xs text-stone-400 mt-2">Ready for your active comfort session</p>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-center gap-2 mt-4">
-            <button id="startTimerBtn" onclick="startTimer()" class="px-5 py-2 bg-stone-800 hover:bg-stone-700 text-white font-semibold text-xs rounded-xl transition flex items-center gap-1.5">
-              <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i> Start
-            </button>
-            <button id="pauseTimerBtn" onclick="pauseTimer()" disabled class="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 disabled:opacity-40 font-semibold text-xs rounded-xl transition">
-              Pause
-            </button>
-            <button id="completeDateBtn" onclick="completeSoloDate()" class="px-4 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-semibold text-xs rounded-xl transition flex items-center gap-1">
-              <i data-lucide="check" class="w-3.5 h-3.5"></i> Complete
-            </button>
-          </div>
+            <button onclick="resetToMain()" style="background:none; border:none; cursor:pointer; color:var(--text-secondary); font-size: 1.2rem;">✕</button>
         </div>
 
-        <!-- TOOL 2: Interactive Task Workspace -->
-        <div class="lg:col-span-7 bg-white rounded-3xl p-6 border border-stone-100 card-shadow flex flex-col gap-3">
-          <div class="flex justify-between items-center">
-            <span id="scratchpadTitle" class="text-xs font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1.5">
-              <i data-lucide="edit-3" class="w-4 h-4 text-emerald-500"></i> Workspace Scratchpad
-            </span>
-            <span class="text-[11px] text-stone-400">Auto-saved to browser</span>
-          </div>
+        <a id="external-link" href="#" target="_blank" class="external-btn">
+            <span>Open Media Platform</span> ↗
+        </a>
 
-          <textarea id="scratchpadInput" placeholder="Work on your task here (write your 5 priorities, 20 flashcards, or 4 lecture summaries)..." class="w-full h-44 p-3.5 text-xs bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-200 font-mono text-stone-700 resize-none custom-scrollbar"></textarea>
+        <div class="recipe-box">
+            <div class="recipe-task" id="recipe-task">Task</div>
+            <div class="recipe-desc" id="recipe-desc">Description</div>
         </div>
 
-      </div>
+        <div class="timer-container">
+            <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);">Focus Session</div>
+            <div class="timer-display" id="timer-display">35:00</div>
+            <button class="timer-btn" id="timer-btn" onclick="toggleTimer()">Start Timer</button>
+        </div>
 
-    </section>
+        <button class="done-btn" onclick="completeCozyDate()">Complete Cozy Date & Refresh Pool</button>
+    </div>
+</div>
 
-    <!-- COMPLETED DATES LOG -->
-    <section class="bg-white rounded-3xl p-6 border border-stone-100 card-shadow">
-      <h3 class="serif text-base font-bold text-stone-800 mb-3 flex items-center justify-between">
-        <span class="flex items-center gap-2">
-          <i data-lucide="heart" class="w-4 h-4 text-rose-400"></i> Completed Solo Dates
-        </span>
-        <span id="dateCountBadge" class="text-xs bg-stone-100 text-stone-600 px-2 py-0.5 rounded-full font-mono font-bold">0</span>
-      </h3>
-
-      <div id="completedDatesList" class="flex flex-col gap-2 max-h-48 overflow-y-auto custom-scrollbar">
-        <p class="text-xs text-stone-400 italic py-2 text-center">No solo dates logged yet. Complete your first session above!</p>
-      </div>
-    </section>
-
-  </main>
-
-  <script>
-    const GOODREADS_URL = "https://www.goodreads.com/review/list/195634833-aether?shelf=read";
-    const AMAZON_MUSIC_URL = "https://music.amazon.in/profiles/@ahana71532064?ref=dm_sh_Mk5I6v6WOR9mIZpUNvV5kLQzo&referrer=dm_sh_whatsapp";
-
-    // Strict single-option per media type matrix linked to exact requested tasks
-    const MOOD_DATA = {
-      homesick: {
-        title: "Homesick & Missing Home",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "Reply 1988",
-            sub: "Warm slice-of-life comfort drama",
-            link: "https://www.viki.com",
-            recipeTitle: "Reply 1988 & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Draft 20 flashcards or key formula cards while watching one episode."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "I Want to Die but I Want to Eat Tteokbokki",
-            sub: "Personal recommendation from your Goodreads collection",
-            link: GOODREADS_URL,
-            recipeTitle: "Cozy Reading & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages and list your top 5 priorities for tomorrow."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "My Neighbor Totoro",
-            sub: "Serene Studio Ghibli classic",
-            link: "https://www.netflix.com",
-            recipeTitle: "Totoro & 4 Lecture Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Write 4 concise lecture summaries during a 35-minute segment."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "Red (Taylor's Version)",
-            sub: "Listen via your Amazon Music profile",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "Red Album & 20 Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Work through 20 practice questions or read 30 textbook pages."
-          }
+<script>
+    // Dynamic Recommendation Pools (Generates fresh random combinations smoothly)
+    const moodData = {
+        blank: {
+            label: "Blank & Depressed",
+            icon: "🌫️",
+            books: [
+                { title: "Disabled Tyrant's Beloved Pet Fish", meta: "Cozy Xianxia / Low Stakes Comedy", query: "Disabled Tyrants Beloved Pet Fish Goodreads" },
+                { title: "The House in the Cerulean Sea", meta: "Warm / Gentle Comfort Fiction", query: "The House in the Cerulean Sea Goodreads" },
+                { title: "Legends & Lattes", meta: "Low Stakes Cozy Fantasy", query: "Legends and Lattes Goodreads" }
+            ],
+            dramas: [
+                { title: "Meet Yourself", meta: "Slice of Life / Slow Pace Healing", query: "Meet Yourself Asian Drama" },
+                { title: "When the Weather is Fine", meta: "Cozy / Quiet Winter Vibe", query: "When the Weather is Fine Drama" },
+                { title: "Hospital Playlist", meta: "Warm Comfort Friendships", query: "Hospital Playlist Drama" }
+            ],
+            movies: [
+                { title: "My Neighbor Totoro", meta: "Studio Ghibli / Gentle Aesthetic", query: "My Neighbor Totoro Movie" },
+                { title: "Little Forest", meta: "Cozy Cooking / Slow Living", query: "Little Forest Movie" },
+                { title: "Whisper of the Heart", meta: "Warm Nostalgia / Quiet Focus", query: "Whisper of the Heart Movie" }
+            ],
+            music: [
+                { title: "Lofi Rain & Cafe Ambience", meta: "Soft Beats / Low Energy", query: "Lofi Rain Amazon Music" },
+                { title: "Acoustic Guitar Calm", meta: "Instrumental / Warm", query: "Acoustic Guitar Calm Amazon Music" },
+                { title: "Quiet Piano Melodies", meta: "Minimal / Gentle", query: "Quiet Piano Amazon Music" }
+            ]
+        },
+        overwhelmed: {
+            label: "Overwhelmed & Anxious",
+            icon: "🌧️",
+            books: [
+                { title: "Before the Coffee Gets Cold", meta: "Short Chapters / Quiet Speculative", query: "Before the Coffee Gets Cold Goodreads" },
+                { title: "The Travelling Cat Chronicles", meta: "Heartwarming / Calming Pace", query: "Travelling Cat Chronicles Goodreads" }
+            ],
+            dramas: [
+                { title: "Reply 1988", meta: "Nostalgic / Comforting Family", query: "Reply 1988 Drama" },
+                { title: "Hometown Cha-Cha-Cha", meta: "Seaside Town / Uplifting", query: "Hometown Cha Cha Cha Drama" }
+            ],
+            movies: [
+                { title: "Kiki's Delivery Service", meta: "Soft Encouragement / Cozy", query: "Kikis Delivery Service Movie" },
+                { title: "Ponyo", meta: "Visually Soothing / Gentle", query: "Ponyo Movie" }
+            ],
+            music: [
+                { title: "Ambient Ocean Waves & Synth", meta: "Deep Relaxation", query: "Ambient Ocean Waves Amazon Music" },
+                { title: "Soft Instrumental OSTs", meta: "Low Stimulation", query: "Instrumental OST Amazon Music" }
+            ]
+        },
+        homesick: {
+            label: "Homesick & Seeking Warmth",
+            icon: "🌸",
+            books: [
+                { title: "Days at the Morisaki Bookshop", meta: "Cozy Community / Reading", query: "Days at the Morisaki Bookshop Goodreads" },
+                { title: "What You Are Looking For Is in the Library", meta: "Uplifting Interconnected Stories", query: "What You Are Looking For Is in the Library Goodreads" }
+            ],
+            dramas: [
+                { title: "Summer Strike", meta: "Quiet Countryside Living", query: "Summer Strike Drama" },
+                { title: "One Day Off", meta: "Short Food & Travel Vignettes", query: "One Day Off Drama" }
+            ],
+            movies: [
+                { title: "Our Little Sister", meta: "Warm Family & Food", query: "Our Little Sister Movie" },
+                { title: "Kamome Diner", meta: "Cozy Cafe Life", query: "Kamome Diner Movie" }
+            ],
+            music: [
+                { title: "Warm Cafe Jazz Piano", meta: "Nostalgic / Relaxing", query: "Cafe Jazz Piano Amazon Music" },
+                { title: "Acoustic Folk Strings", meta: "Comforting / Gentle", query: "Acoustic Folk Amazon Music" }
+            ]
+        },
+        stimulated: {
+            label: "Too Stimulated & Worried",
+            icon: "⚡",
+            books: [
+                { title: "Convenience Store Woman", meta: "Short / Grounding Realism", query: "Convenience Store Woman Goodreads" },
+                { title: "Klara and the Sun", meta: "Thoughtful / Steady Pacing", query: "Klara and the Sun Goodreads" }
+            ],
+            dramas: [
+                { title: "Run On", meta: "Calm Dialogue / Low Drama", query: "Run On Drama" },
+                { title: "My Liberation Notes", meta: "Grounding / Slow Paced", query: "My Liberation Notes Drama" }
+            ],
+            dramasPool: [],
+            movies: [
+                { title: "Paterson", meta: "Quiet Routine / Poetry", query: "Paterson Movie" },
+                { title: "Perfect Days", meta: "Mindful Living / Peaceful", query: "Perfect Days Movie" }
+            ],
+            music: [
+                { title: "432Hz Deep Focus Drone", meta: "Brainwave Grounding", query: "432Hz Deep Focus Amazon Music" },
+                { title: "Binaural Study Alpha Waves", meta: "Calming Mental Drift", query: "Alpha Waves Amazon Music" }
+            ]
         }
-      },
-      blank: {
-        title: "Feeling Blank & Depressed",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "Hometown Cha-Cha-Cha",
-            sub: "Gentle seaside comfort drama",
-            link: "https://www.netflix.com",
-            recipeTitle: "Seaside Drama & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Write 20 simple vocabulary or formula flashcards during pauses."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "The Disabled Tyrant's Beloved Pet Fish",
-            sub: "Direct choice from your personal library",
-            link: GOODREADS_URL,
-            recipeTitle: "Pet Fish Reading & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages of Pet Fish and note down 5 basic priorities for tomorrow."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "Little Forest",
-            sub: "Soothing nature & cooking film",
-            link: "https://www.primevideo.com",
-            recipeTitle: "Little Forest & 4 Lecture Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Summarize 4 key lecture concepts during the segment."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "Folklore (Taylor Swift)",
-            sub: "Cozy indie-folk on Amazon Music",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "Folklore & Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Solve 20 practice questions alongside calming tracks."
-          }
-        }
-      },
-      worried: {
-        title: "Too Stimulated & Worried",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "Hidden Love",
-            sub: "Engaging romance drama to absorb your focus",
-            link: "https://www.netflix.com",
-            recipeTitle: "Hidden Love & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Draft 20 flashcards to channel extra restless energy."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "Heaven Official's Blessing",
-            sub: "Immersive fantasy from your reading list",
-            link: GOODREADS_URL,
-            recipeTitle: "Fantasy Sprint & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages and organize tomorrow with 5 clear priorities."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "Spider-Man: Into the Spider-Verse",
-            sub: "Visually captivating dynamic film",
-            link: "https://www.netflix.com",
-            recipeTitle: "Spider-Verse & 4 Lecture Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Distill 4 complex lecture topics into clean summaries."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "1989 (Taylor's Version)",
-            sub: "Upbeat pop focus on Amazon Music",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "1989 Album & 20 Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Power through 20 practice questions with high-rhythm beats."
-          }
-        }
-      },
-      anxious: {
-        title: "Overwhelmed & Anxious",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "When the Weather is Fine",
-            sub: "Quiet countryside bookstore vibe",
-            link: "https://www.viki.com",
-            recipeTitle: "Quiet Drama & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Draft 20 review flashcards during slow, calm scenes."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "Days at the Morisaki Bookshop",
-            sub: "Gentle cozy bookstore read",
-            link: GOODREADS_URL,
-            recipeTitle: "Bookshop Read & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages and ground yourself by listing 5 priorities."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "Paddington 2",
-            sub: "Pure comforting cinematic warmth",
-            link: "https://www.primevideo.com",
-            recipeTitle: "Paddington 2 & 4 Lecture Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Write 4 concise lecture summaries during movie breaks."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "Evermore (Taylor Swift)",
-            sub: "Grounding acoustic soundscape on Amazon Music",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "Evermore & Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Complete 20 practice problems at your own pace."
-          }
-        }
-      },
-      bored: {
-        title: "Restless & Seeking Focus",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "Business Proposal",
-            sub: "Upbeat romantic comedy",
-            link: "https://www.netflix.com",
-            recipeTitle: "Business Proposal & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Write 20 active recall flashcards while watching."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "Omniscient Reader's Viewpoint",
-            sub: "High-excitement reading choice",
-            link: GOODREADS_URL,
-            recipeTitle: "Action Reading & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages and map out 5 priorities for tomorrow."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "Knives Out",
-            sub: "Clever mystery storytelling",
-            link: "https://www.primevideo.com",
-            recipeTitle: "Knives Out & 4 Lecture Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Write 4 structured lecture summaries during pauses."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "Lover (Taylor Swift)",
-            sub: "Vibrant melody focus on Amazon Music",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "Lover Album & Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Solve 20 practice questions alongside your favorite tracks."
-          }
-        }
-      },
-      night: {
-        title: "Late Night Quiet Energy",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "Midnight Diner",
-            sub: "Gentle late-night stories",
-            link: "https://www.netflix.com",
-            recipeTitle: "Midnight Diner & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Draft 20 flashcards for tomorrow's revision."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "Before the Coffee Gets Cold",
-            sub: "Quiet late-night comfort read",
-            link: GOODREADS_URL,
-            recipeTitle: "Late Night Read & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages before sleep and write 5 top priorities."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "Whisper of the Heart",
-            sub: "Aesthetic Studio Ghibli classic",
-            link: "https://www.netflix.com",
-            recipeTitle: "Whisper of the Heart & 4 Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Draft 4 clean lecture summaries."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "Midnights (Taylor Swift)",
-            sub: "Late night atmosphere on Amazon Music",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "Midnights & Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Work through 20 practice questions before calling it a night."
-          }
-        }
-      }
     };
 
-    // State Variables
-    let selectedMoodKey = null;
-    let currentRecipe = null;
-    let timerSecondsLeft = 30 * 60;
-    let timerInterval = null;
-    let completedDates = [];
-
-    // Init App
-    document.addEventListener('DOMContentLoaded', () => {
-      lucide.createIcons();
-      loadSavedScratchpad();
-      loadCompletedDates();
-    });
-
-    // Step 1: Select Mood
-    function selectMood(moodKey) {
-      selectedMoodKey = moodKey;
-      const moodInfo = MOOD_DATA[moodKey];
-
-      document.getElementById('selectedMoodTitle').innerText = `Options for "${moodInfo.title}"`;
-      
-      const grid = document.getElementById('mediaCardsGrid');
-      grid.innerHTML = '';
-
-      Object.keys(moodInfo.options).forEach(key => {
-        const opt = moodInfo.options[key];
-        
-        let iconName = 'tv';
-        let badgeColor = 'bg-purple-100 text-purple-800';
-        if (key === 'book') { iconName = 'book-open'; badgeColor = 'bg-emerald-100 text-emerald-800'; }
-        if (key === 'movie') { iconName = 'film'; badgeColor = 'bg-amber-100 text-amber-800'; }
-        if (key === 'music') { iconName = 'music'; badgeColor = 'bg-sky-100 text-sky-800'; }
-
-        const card = document.createElement('div');
-        card.className = "bg-white rounded-2xl p-5 border border-stone-100 card-shadow hover:border-stone-300 transition flex flex-col justify-between gap-4 cursor-pointer group";
-        card.onclick = () => launchSoloDate(moodKey, key);
-
-        card.innerHTML = `
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${badgeColor}">
-                ${opt.type}
-              </span>
-              <i data-lucide="${iconName}" class="w-4 h-4 text-stone-400 group-hover:text-stone-700 transition"></i>
-            </div>
-            <h4 class="text-base font-bold text-stone-800 group-hover:text-rose-600 transition">${opt.title}</h4>
-            <p class="text-xs text-stone-500 mt-1">${opt.sub}</p>
-          </div>
-          
-          <div class="pt-3 border-t border-stone-100 flex items-center justify-between text-xs font-semibold text-rose-500">
-            <span>Pair with: ${opt.recipeTaskDetail}</span>
-            <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-
-      lucide.createIcons();
-
-      document.getElementById('mediaSection').classList.remove('hidden');
-      document.getElementById('mediaSection').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Step 2: Launch Solo Date
-    function launchSoloDate(moodKey, optionKey) {
-      const opt = MOOD_DATA[moodKey].options[optionKey];
-      currentRecipe = opt;
-
-      document.getElementById('recipeTitle').innerText = opt.recipeTitle;
-      document.getElementById('recipeMediaDetail').innerText = `${opt.type}: ${opt.title}`;
-      document.getElementById('recipeMediaSub').innerText = opt.sub;
-      
-      document.getElementById('recipeTaskDetail').innerText = opt.recipeTaskDetail;
-      document.getElementById('recipeTaskSub').innerText = opt.recipeTaskSub;
-      
-      document.getElementById('externalMediaBtn').href = opt.link;
-      document.getElementById('externalMediaBtnText').innerText = opt.type.includes("Book") ? "View Goodreads Shelf" : (opt.type.includes("Amazon") ? "Open Amazon Music Profile" : "Open Stream");
-
-      document.getElementById('scratchpadTitle').innerHTML = `
-        <i data-lucide="edit-3" class="w-4 h-4 text-emerald-500"></i> ${opt.recipeTaskDetail} Workspace
-      `;
-
-      setTimerDuration(30);
-
-      document.getElementById('dateDashboard').classList.remove('hidden');
-      document.getElementById('dateDashboard').scrollIntoView({ behavior: 'smooth' });
-      lucide.createIcons();
-    }
-
-    // Timer Functions
-    function setTimerDuration(mins) {
-      pauseTimer();
-      timerSecondsLeft = mins * 60;
-      updateTimerDisplay();
-    }
-
-    function startTimer() {
-      if (timerInterval) clearInterval(timerInterval);
-      
-      document.getElementById('startTimerBtn').disabled = true;
-      document.getElementById('pauseTimerBtn').disabled = false;
-      document.getElementById('timerStatus').innerText = "Active comfort session running...";
-
-      timerInterval = setInterval(() => {
-        if (timerSecondsLeft > 0) {
-          timerSecondsLeft--;
-          updateTimerDisplay();
-        } else {
-          clearInterval(timerInterval);
-          document.getElementById('timerStatus').innerText = "Session Complete! Well done!";
-          alert("Your 30–45 minute active comfort session is complete!");
+    // Strict Date Recipe Mappings
+    const recipeMappings = {
+        book: {
+            typeTag: "Book Reading",
+            taskTitle: "📝 Reading & To-Do List Recipe (30–45 Mins)",
+            desc: "Read at your own pace for 30–35 minutes. Spend the final 10 minutes pausing to write down a clear top-5 priority list or task outline for tomorrow.",
+            getLink: (q) => `https://www.goodreads.com/search?q=${encodeURIComponent(q)}`
+        },
+        drama: {
+            typeTag: "Asian Drama",
+            taskTitle: "❓ Drama Watching & Question Making Recipe (30–45 Mins)",
+            desc: "Enjoy one episode or a 30-45 minute segment. During quiet scenes or pauses, draft 5-10 active recall practice questions based on your recent studies.",
+            getLink: (q) => `https://www.google.com/search?q=${encodeURIComponent(q)}`
+        },
+        movie: {
+            typeTag: "Movie Segment",
+            taskTitle: "📑 Movie & Lecture Summary Recipe (30–45 Mins)",
+            desc: "Watch a 30-45 minute segment of the movie. As you watch, keep a notepad nearby to summarize today's lecture key takeaways into brief bullet points.",
+            getLink: (q) => `https://www.google.com/search?q=${encodeURIComponent(q)}`
+        },
+        music: {
+            typeTag: "Music / Soundscape",
+            taskTitle: "📖 Soundscape & Reading / Question Practice Recipe (30–45 Mins)",
+            desc: "Play the soundscape in the background and immerse yourself in 30-45 minutes of dedicated textbook reading or active question practice set resolution.",
+            getLink: (q) => `https://music.amazon.com/search/${encodeURIComponent(q)}`
         }
-      }, 1000);
+    };
+
+    let currentMood = 'blank';
+    let currentActiveOption = null;
+    let timerInterval = null;
+    let timerSeconds = 35 * 60;
+    let isTimerRunning = false;
+
+    // Helper: Select random element without hardcoding
+    function getRandomItem(array) {
+        return array[Math.floor(Math.random() * array.length)];
     }
 
-    function pauseTimer() {
-      clearInterval(timerInterval);
-      document.getElementById('startTimerBtn').disabled = false;
-      document.getElementById('pauseTimerBtn').disabled = true;
-      document.getElementById('timerStatus').innerText = "Timer paused";
+    // Render Mood Selection Buttons
+    function initMoods() {
+        const moodContainer = document.getElementById('mood-selector');
+        moodContainer.innerHTML = '';
+        
+        Object.keys(moodData).forEach(key => {
+            const m = moodData[key];
+            const btn = document.createElement('button');
+            btn.className = `mood-btn ${key === currentMood ? 'active' : ''}`;
+            btn.innerHTML = `<span>${m.icon}</span> <span>${m.label}</span>`;
+            btn.onclick = () => {
+                currentMood = key;
+                initMoods();
+                renderOptions();
+            };
+            moodContainer.appendChild(btn);
+        });
     }
 
+    // Dynamic rendering: picks 1 fresh option for each category dynamically on refresh/completion
+    function renderOptions() {
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+
+        const data = moodData[currentMood];
+        const categories = [
+            { key: 'book', label: '📖 Book', pool: data.books },
+            { key: 'drama', label: '📺 Asian Drama', pool: data.dramas },
+            { key: 'movie', label: '🎬 Movie Segment', pool: data.movies },
+            { key: 'music', label: '🎧 Music / Soundscape', pool: data.music }
+        ];
+
+        categories.forEach(cat => {
+            const selectedItem = getRandomItem(cat.pool);
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div>
+                    <div class="card-type">${cat.label}</div>
+                    <div class="card-title">${selectedItem.title}</div>
+                    <div class="card-meta">${selectedItem.meta}</div>
+                </div>
+                <div class="card-action">Start Cozy Date ➔</div>
+            `;
+            card.onclick = () => openCozyDate(cat.key, selectedItem);
+            container.appendChild(card);
+        });
+    }
+
+    // Open Date Experience View
+    function openCozyDate(categoryKey, item) {
+        currentActiveOption = { categoryKey, item };
+        const recipe = recipeMappings[categoryKey];
+
+        document.getElementById('main-view').classList.add('hidden');
+        document.getElementById('date-view').style.display = 'block';
+
+        document.getElementById('view-type').innerText = recipe.typeTag;
+        document.getElementById('view-title').innerText = item.title;
+        document.getElementById('view-meta').innerText = item.meta;
+
+        document.getElementById('recipe-task').innerText = recipe.taskTitle;
+        document.getElementById('recipe-desc').innerText = recipe.desc;
+
+        const extBtn = document.getElementById('external-link');
+        extBtn.href = recipe.getLink(item.query || item.title);
+
+        resetTimer(35);
+    }
+
+    // Reset back to main options
+    function resetToMain() {
+        stopTimer();
+        document.getElementById('date-view').style.display = 'none';
+        document.getElementById('main-view').classList.remove('hidden');
+    }
+
+    // Completion Handler: refreshes options smooth and dynamically
+    function completeCozyDate() {
+        resetToMain();
+        renderOptions(); // Dynamically generates fresh choices from pool
+    }
+
+    // Timer Logic
     function updateTimerDisplay() {
-      const m = Math.floor(timerSecondsLeft / 60);
-      const s = timerSecondsLeft % 60;
-      document.getElementById('timerDisplay').innerText = 
-        `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        const mins = Math.floor(timerSeconds / 60);
+        const secs = timerSeconds % 60;
+        document.getElementById('timer-display').innerText = 
+            `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
 
-    // Complete Solo Date & Log
-    function completeSoloDate() {
-      if (!currentRecipe) return;
-
-      const dateRecord = {
-        id: 'date_' + Date.now(),
-        title: currentRecipe.recipeTitle,
-        type: currentRecipe.type,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        date: new Date().toLocaleDateString()
-      };
-
-      completedDates.unshift(dateRecord);
-      saveCompletedDates();
-      renderCompletedDates();
-      alert("Logged to your completed Solo Dates!");
+    function toggleTimer() {
+        if (isTimerRunning) {
+            stopTimer();
+        } else {
+            isTimerRunning = true;
+            document.getElementById('timer-btn').innerText = 'Pause Timer';
+            timerInterval = setInterval(() => {
+                if (timerSeconds > 0) {
+                    timerSeconds--;
+                    updateTimerDisplay();
+                } else {
+                    stopTimer();
+                    alert("Cozy session complete! Take a soft breath.");
+                }
+            }, 1000);
+        }
     }
 
-    function renderCompletedDates() {
-      const list = document.getElementById('completedDatesList');
-      document.getElementById('dateCountBadge').innerText = completedDates.length;
-
-      if (completedDates.length === 0) {
-        list.innerHTML = `<p class="text-xs text-stone-400 italic py-2 text-center">No solo dates logged yet. Complete your first session above!</p>`;
-        return;
-      }
-
-      list.innerHTML = completedDates.map(d => `
-        <div class="flex items-center justify-between p-3 rounded-2xl bg-stone-50 border border-stone-100 text-xs">
-          <div class="flex items-center gap-2.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span class="font-bold text-stone-800">${escapeHtml(d.title)}</span>
-            <span class="text-[10px] bg-stone-200/60 text-stone-600 px-2 py-0.5 rounded-full font-mono">${d.type}</span>
-          </div>
-          <span class="text-[11px] text-stone-400 font-mono">${d.date} at ${d.timestamp}</span>
-        </div>
-      `).join('');
+    function stopTimer() {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        document.getElementById('timer-btn').innerText = 'Start Timer';
     }
 
-    // Scratchpad Auto-save
-    const scratchpad = document.getElementById('scratchpadInput');
-    scratchpad.addEventListener('input', () => {
-      localStorage.setItem('solohaven_scratchpad', scratchpad.value);
-    });
-
-    function loadSavedScratchpad() {
-      const saved = localStorage.getItem('solohaven_scratchpad');
-      if (saved) scratchpad.value = saved;
+    function resetTimer(minutes) {
+        stopTimer();
+        timerSeconds = minutes * 60;
+        updateTimerDisplay();
     }
 
-    function loadCompletedDates() {
-      const saved = localStorage.getItem('solohaven_dates');
-      completedDates = saved ? JSON.parse(saved) : [];
-      renderCompletedDates();
-    }
-
-    function saveCompletedDates() {
-      localStorage.setItem('solohaven_dates', JSON.stringify(completedDates));
-    }
-
-    function resetApp() {
-      document.getElementById('mediaSection').classList.add('hidden');
-      document.getElementById('dateDashboard').classList.add('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function escapeHtml(str) {
-      return str.replace(/[&<>"']/g, function(m) {
-        return {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#039;'
-        }[m];
-      });
-    }
-  </script>
+    // Initial Load
+    initMoods();
+    renderOptions();
+</script>
 </body>
 </html>
