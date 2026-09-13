@@ -44,7 +44,7 @@
         </div>
         <div>
           <h1 class="serif text-2xl font-bold tracking-tight text-stone-800">SoloHaven</h1>
-          <p class="text-[10px] text-stone-400 font-medium tracking-wider uppercase">Active Comfort & Calming Sanctuary</p>
+          <p class="text-[10px] text-stone-400 font-medium tracking-wider uppercase">Active Comfort Companion</p>
         </div>
       </div>
 
@@ -67,18 +67,18 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
         <button onclick="selectMood('homesick')" class="p-4 rounded-2xl border border-pink-100 bg-pink-50/40 hover:bg-pink-100/60 transition text-left flex items-start gap-3 group">
-          <span class="text-2xl">🌸</span>
+          <span class="text-2xl">🏒</span>
           <div>
             <div class="text-sm font-bold text-stone-800 group-hover:text-pink-900">Homesick & Missing Home</div>
-            <div class="text-[11px] text-stone-500 mt-0.5">Warm, comforting, gentle grounding energy.</div>
+            <div class="text-[11px] text-stone-500 mt-0.5">BL Sports Romances (Puckboys / Fake Boyfriend).</div>
           </div>
         </button>
 
         <button onclick="selectMood('blank')" class="p-4 rounded-2xl border border-purple-100 bg-purple-50/40 hover:bg-purple-100/60 transition text-left flex items-start gap-3 group">
-          <span class="text-2xl">🌫️</span>
+          <span class="text-2xl">🐟</span>
           <div>
             <div class="text-sm font-bold text-stone-800 group-hover:text-purple-900">Feeling Blank & Depressed</div>
-            <div class="text-[11px] text-stone-500 mt-0.5">Low barrier comfort without pressure.</div>
+            <div class="text-[11px] text-stone-500 mt-0.5">Danmei BL Comfort (Disabled Tyrant's Pet Fish).</div>
           </div>
         </button>
 
@@ -86,7 +86,7 @@
           <span class="text-2xl">⚡</span>
           <div>
             <div class="text-sm font-bold text-stone-800 group-hover:text-amber-900">Too Stimulated & Worried</div>
-            <div class="text-[11px] text-stone-500 mt-0.5">Double-tasking to quiet racing thoughts.</div>
+            <div class="text-[11px] text-stone-500 mt-0.5">Fast-paced focus & high engagement.</div>
           </div>
         </button>
 
@@ -94,7 +94,7 @@
           <span class="text-2xl">🌧️</span>
           <div>
             <div class="text-sm font-bold text-stone-800 group-hover:text-sky-900">Overwhelmed & Anxious</div>
-            <div class="text-[11px] text-stone-500 mt-0.5">Slow-paced calming focus & light structure.</div>
+            <div class="text-[11px] text-stone-500 mt-0.5">Slow-paced calming structure.</div>
           </div>
         </button>
 
@@ -110,33 +110,32 @@
           <span class="text-2xl">🌙</span>
           <div>
             <div class="text-sm font-bold text-stone-800 group-hover:text-indigo-900">Late Night Quiet Energy</div>
-            <div class="text-[11px] text-stone-500 mt-0.5">Peaceful, cozy hostel room rituals.</div>
+            <div class="text-[11px] text-stone-500 mt-0.5">Peaceful, quiet late-night rituals.</div>
           </div>
         </button>
       </div>
     </section>
 
-    <!-- STEP 2: 4-WAY MEDIA OPTIONS (Hidden initially) -->
+    <!-- STEP 2: MEDIA OPTIONS + REFRESH BUTTON -->
     <section id="mediaSection" class="hidden flex flex-col gap-4">
       <div class="flex items-center justify-between">
         <div>
           <span class="text-xs font-bold text-rose-400 uppercase tracking-widest">Step 2</span>
           <h3 id="selectedMoodTitle" class="serif text-xl font-bold text-stone-800">Pick your Active Comfort Medium</h3>
         </div>
-        <span class="text-xs bg-rose-50 text-rose-700 font-semibold px-3 py-1 rounded-full border border-rose-100">
-          Duration: 30–45 mins
-        </span>
+        <button onclick="refreshOptions()" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs rounded-full border border-rose-200 transition flex items-center gap-1.5 shadow-sm">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Shuffle Options
+        </button>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="mediaCardsGrid">
-        <!-- Populated dynamically by JS -->
+        <!-- Populated dynamically -->
       </div>
     </section>
 
-    <!-- STEP 3: ACTIVE SOLO DATE DASHBOARD (Hidden initially) -->
+    <!-- STEP 3: ACTIVE DASHBOARD -->
     <section id="dateDashboard" class="hidden flex flex-col gap-6">
       
-      <!-- Date Recipe Card -->
       <div class="bg-gradient-to-br from-stone-900 to-stone-800 text-white rounded-3xl p-6 sm:p-8 card-shadow relative overflow-hidden">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-stone-700/60 pb-5 mb-5">
           <div>
@@ -147,26 +146,24 @@
           </div>
           <div class="flex items-center gap-2">
             <a id="externalMediaBtn" href="#" target="_blank" class="px-4 py-2 bg-emerald-400 hover:bg-emerald-300 text-stone-950 font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm">
-              <span id="externalMediaBtnText">Open Media</span>
+              <span id="externalMediaBtnText">Open Link</span>
               <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
             </a>
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Media Focus -->
           <div class="bg-stone-800/70 rounded-2xl p-4 border border-stone-700/50">
             <div class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-              <i data-lucide="tv" class="w-3.5 h-3.5 text-rose-300"></i> Single Recommendation
+              <i data-lucide="tv" class="w-3.5 h-3.5 text-rose-300"></i> Active Recommendation
             </div>
             <div id="recipeMediaDetail" class="text-base font-bold text-stone-100 mb-1">---</div>
             <div id="recipeMediaSub" class="text-xs text-stone-400">---</div>
           </div>
 
-          <!-- Active Task Focus -->
           <div class="bg-stone-800/70 rounded-2xl p-4 border border-stone-700/50">
             <div class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-              <i data-lucide="check-square" class="w-3.5 h-3.5 text-emerald-300"></i> Productivity Pairing
+              <i data-lucide="check-square" class="w-3.5 h-3.5 text-emerald-300"></i> Study Task Pairing
             </div>
             <div id="recipeTaskDetail" class="text-base font-bold text-emerald-300 mb-1">---</div>
             <div id="recipeTaskSub" class="text-xs text-stone-400">---</div>
@@ -174,10 +171,8 @@
         </div>
       </div>
 
-      <!-- Built-In Comfort Tools Workspace -->
+      <!-- WORKSPACE & TIMER -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        <!-- TOOL 1: Built-in 30-45m Focus Timer -->
         <div class="lg:col-span-5 bg-white rounded-3xl p-6 border border-stone-100 card-shadow flex flex-col justify-between">
           <div>
             <div class="flex justify-between items-center mb-4">
@@ -191,9 +186,7 @@
             </div>
 
             <div class="text-center my-4">
-              <div id="timerDisplay" class="text-5xl font-extrabold font-mono tracking-tight text-stone-800">
-                30:00
-              </div>
+              <div id="timerDisplay" class="text-5xl font-extrabold font-mono tracking-tight text-stone-800">30:00</div>
               <p id="timerStatus" class="text-xs text-stone-400 mt-2">Ready for your active comfort session</p>
             </div>
           </div>
@@ -211,7 +204,6 @@
           </div>
         </div>
 
-        <!-- TOOL 2: Interactive Task Workspace -->
         <div class="lg:col-span-7 bg-white rounded-3xl p-6 border border-stone-100 card-shadow flex flex-col gap-3">
           <div class="flex justify-between items-center">
             <span id="scratchpadTitle" class="text-xs font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1.5">
@@ -222,12 +214,11 @@
 
           <textarea id="scratchpadInput" placeholder="Work on your task here (write your 5 priorities, 20 flashcards, or 4 lecture summaries)..." class="w-full h-44 p-3.5 text-xs bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-200 font-mono text-stone-700 resize-none custom-scrollbar"></textarea>
         </div>
-
       </div>
 
     </section>
 
-    <!-- COMPLETED DATES LOG -->
+    <!-- LOGGED DATES -->
     <section class="bg-white rounded-3xl p-6 border border-stone-100 card-shadow">
       <h3 class="serif text-base font-bold text-stone-800 mb-3 flex items-center justify-between">
         <span class="flex items-center gap-2">
@@ -247,282 +238,183 @@
     const GOODREADS_URL = "https://www.goodreads.com/review/list/195634833-aether?shelf=read";
     const AMAZON_MUSIC_URL = "https://music.amazon.in/profiles/@ahana71532064?ref=dm_sh_Mk5I6v6WOR9mIZpUNvV5kLQzo&referrer=dm_sh_whatsapp";
 
-    // Strict single-option per media type matrix linked to exact requested tasks
-    const MOOD_DATA = {
-      homesick: {
-        title: "Homesick & Missing Home",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "Reply 1988",
-            sub: "Warm slice-of-life comfort drama",
-            link: "https://www.viki.com",
-            recipeTitle: "Reply 1988 & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Draft 20 flashcards or key formula cards while watching one episode."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "I Want to Die but I Want to Eat Tteokbokki",
-            sub: "Personal recommendation from your Goodreads collection",
-            link: GOODREADS_URL,
-            recipeTitle: "Cozy Reading & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages and list your top 5 priorities for tomorrow."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "My Neighbor Totoro",
-            sub: "Serene Studio Ghibli classic",
-            link: "https://www.netflix.com",
-            recipeTitle: "Totoro & 4 Lecture Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Write 4 concise lecture summaries during a 35-minute segment."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "Red (Taylor's Version)",
-            sub: "Listen via your Amazon Music profile",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "Red Album & 20 Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Work through 20 practice questions or read 30 textbook pages."
-          }
-        }
-      },
-      blank: {
-        title: "Feeling Blank & Depressed",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "Hometown Cha-Cha-Cha",
-            sub: "Gentle seaside comfort drama",
-            link: "https://www.netflix.com",
-            recipeTitle: "Seaside Drama & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Write 20 simple vocabulary or formula flashcards during pauses."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "The Disabled Tyrant's Beloved Pet Fish",
-            sub: "Direct choice from your personal library",
-            link: GOODREADS_URL,
-            recipeTitle: "Pet Fish Reading & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages of Pet Fish and note down 5 basic priorities for tomorrow."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "Little Forest",
-            sub: "Soothing nature & cooking film",
-            link: "https://www.primevideo.com",
-            recipeTitle: "Little Forest & 4 Lecture Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Summarize 4 key lecture concepts during the segment."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "Folklore (Taylor Swift)",
-            sub: "Cozy indie-folk on Amazon Music",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "Folklore & Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Solve 20 practice questions alongside calming tracks."
-          }
-        }
-      },
-      worried: {
-        title: "Too Stimulated & Worried",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "Hidden Love",
-            sub: "Engaging romance drama to absorb your focus",
-            link: "https://www.netflix.com",
-            recipeTitle: "Hidden Love & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Draft 20 flashcards to channel extra restless energy."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "Heaven Official's Blessing",
-            sub: "Immersive fantasy from your reading list",
-            link: GOODREADS_URL,
-            recipeTitle: "Fantasy Sprint & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages and organize tomorrow with 5 clear priorities."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "Spider-Man: Into the Spider-Verse",
-            sub: "Visually captivating dynamic film",
-            link: "https://www.netflix.com",
-            recipeTitle: "Spider-Verse & 4 Lecture Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Distill 4 complex lecture topics into clean summaries."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "1989 (Taylor's Version)",
-            sub: "Upbeat pop focus on Amazon Music",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "1989 Album & 20 Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Power through 20 practice questions with high-rhythm beats."
-          }
-        }
-      },
-      anxious: {
-        title: "Overwhelmed & Anxious",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "When the Weather is Fine",
-            sub: "Quiet countryside bookstore vibe",
-            link: "https://www.viki.com",
-            recipeTitle: "Quiet Drama & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Draft 20 review flashcards during slow, calm scenes."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "Days at the Morisaki Bookshop",
-            sub: "Gentle cozy bookstore read",
-            link: GOODREADS_URL,
-            recipeTitle: "Bookshop Read & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages and ground yourself by listing 5 priorities."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "Paddington 2",
-            sub: "Pure comforting cinematic warmth",
-            link: "https://www.primevideo.com",
-            recipeTitle: "Paddington 2 & 4 Lecture Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Write 4 concise lecture summaries during movie breaks."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "Evermore (Taylor Swift)",
-            sub: "Grounding acoustic soundscape on Amazon Music",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "Evermore & Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Complete 20 practice problems at your own pace."
-          }
-        }
-      },
-      bored: {
-        title: "Restless & Seeking Focus",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "Business Proposal",
-            sub: "Upbeat romantic comedy",
-            link: "https://www.netflix.com",
-            recipeTitle: "Business Proposal & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Write 20 active recall flashcards while watching."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "Omniscient Reader's Viewpoint",
-            sub: "High-excitement reading choice",
-            link: GOODREADS_URL,
-            recipeTitle: "Action Reading & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages and map out 5 priorities for tomorrow."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "Knives Out",
-            sub: "Clever mystery storytelling",
-            link: "https://www.primevideo.com",
-            recipeTitle: "Knives Out & 4 Lecture Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Write 4 structured lecture summaries during pauses."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "Lover (Taylor Swift)",
-            sub: "Vibrant melody focus on Amazon Music",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "Lover Album & Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Solve 20 practice questions alongside your favorite tracks."
-          }
-        }
-      },
-      night: {
-        title: "Late Night Quiet Energy",
-        options: {
-          drama: {
-            type: "Asian Drama",
-            title: "Midnight Diner",
-            sub: "Gentle late-night stories",
-            link: "https://www.netflix.com",
-            recipeTitle: "Midnight Diner & 20 Flashcards",
-            recipeTaskDetail: "Make 20 Flashcards",
-            recipeTaskSub: "Draft 20 flashcards for tomorrow's revision."
-          },
-          book: {
-            type: "Book Recommendation",
-            title: "Before the Coffee Gets Cold",
-            sub: "Quiet late-night comfort read",
-            link: GOODREADS_URL,
-            recipeTitle: "Late Night Read & 5 Priorities",
-            recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
-            recipeTaskSub: "Read 30 pages before sleep and write 5 top priorities."
-          },
-          movie: {
-            type: "Movie Segment",
-            title: "Whisper of the Heart",
-            sub: "Aesthetic Studio Ghibli classic",
-            link: "https://www.netflix.com",
-            recipeTitle: "Whisper of the Heart & 4 Summaries",
-            recipeTaskDetail: "4 Lecture Summaries",
-            recipeTaskSub: "Draft 4 clean lecture summaries."
-          },
-          music: {
-            type: "Amazon Music Album",
-            title: "Midnights (Taylor Swift)",
-            sub: "Late night atmosphere on Amazon Music",
-            link: AMAZON_MUSIC_URL,
-            recipeTitle: "Midnights & Practice Questions",
-            recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
-            recipeTaskSub: "Work through 20 practice questions before calling it a night."
-          }
-        }
-      }
-    };
+    // Rotational pools for BL Sports and Danmei
+    const HOMESICK_BL_BOOKS = [
+      { title: "Puckdrills & Quickcounts (Puckboys Series)", sub: "MM Hockey Sports Romance by Eden Finley & Saxon James" },
+      { title: "Fake Boyfriend Series (Fake Out / Trick Play)", sub: "MM Sports / Fake Dating Romance by Eden Finley" },
+      { title: "Power Plays & Straight A's (CU Hockey)", sub: "MM College Hockey Sports Romance by Eden Finley" },
+      { title: "Time to Shine", sub: "MM Cozy Hockey Sports Romance by Rachel Reid" },
+      { title: "Top Secret", sub: "MM Fake Rivals Romance by Sarina Bowen & Elle Kennedy" }
+    ];
 
-    // State Variables
+    const DANMEI_BOOKS = [
+      { title: "The Disabled Tyrant's Beloved Pet Fish", sub: "Comedy Danmei BL Transmigration Novel by Xue Li" },
+      { title: "Heaven Official's Blessing (Tian Guan Ci Fu)", sub: "Devotional Epic Fantasy Danmei BL by MXTX" },
+      { title: "Grandmaster of Demonic Cultivation (MDZS)", sub: "Action Fantasy Danmei BL Novel by MXTX" },
+      { title: "The Scum Villain's Self-Saving System", sub: "Hilarious Comedy Danmei BL Transmigration Novel" }
+    ];
+
+    let currentHomesickIndex = 0;
+    let currentDanmeiIndex = 0;
+
+    function getMoodData(moodKey) {
+      return {
+        homesick: {
+          title: "Homesick & Missing Home",
+          options: {
+            book: {
+              type: "BL Sports Romance Book",
+              title: HOMESICK_BL_BOOKS[currentHomesickIndex].title,
+              sub: HOMESICK_BL_BOOKS[currentHomesickIndex].sub,
+              link: GOODREADS_URL,
+              recipeTitle: "BL Sports Read & 5 Priorities",
+              recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
+              recipeTaskSub: "Read 30 pages and note down 5 basic priorities for tomorrow."
+            },
+            drama: {
+              type: "Asian Drama",
+              title: "Reply 1988",
+              sub: "Warm slice-of-life comfort drama",
+              link: "https://www.viki.com",
+              recipeTitle: "Reply 1988 & 20 Flashcards",
+              recipeTaskDetail: "Make 20 Flashcards",
+              recipeTaskSub: "Draft 20 flashcards or formula cards while watching one episode."
+            },
+            movie: {
+              type: "Movie Segment",
+              title: "My Neighbor Totoro",
+              sub: "Serene Studio Ghibli classic",
+              link: "https://www.netflix.com",
+              recipeTitle: "Totoro & 4 Lecture Summaries",
+              recipeTaskDetail: "4 Lecture Summaries",
+              recipeTaskSub: "Write 4 concise lecture summaries during a 35-minute segment."
+            },
+            music: {
+              type: "Amazon Music Album",
+              title: "Red (Taylor's Version)",
+              sub: "Listen via your Amazon Music profile",
+              link: AMAZON_MUSIC_URL,
+              recipeTitle: "Red Album & 20 Practice Questions",
+              recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
+              recipeTaskSub: "Work through 20 practice questions or read 30 textbook pages."
+            }
+          }
+        },
+        blank: {
+          title: "Feeling Blank & Depressed",
+          options: {
+            book: {
+              type: "Danmei BL Book",
+              title: DANMEI_BOOKS[currentDanmeiIndex].title,
+              sub: DANMEI_BOOKS[currentDanmeiIndex].sub,
+              link: GOODREADS_URL,
+              recipeTitle: "Danmei Reading & 5 Priorities",
+              recipeTaskDetail: "Read 30 Pages & Make 5 Priorities",
+              recipeTaskSub: "Read 30 pages and note down 5 basic priorities for tomorrow."
+            },
+            drama: {
+              type: "Asian Drama",
+              title: "Hometown Cha-Cha-Cha",
+              sub: "Gentle seaside comfort drama",
+              link: "https://www.netflix.com",
+              recipeTitle: "Seaside Drama & 20 Flashcards",
+              recipeTaskDetail: "Make 20 Flashcards",
+              recipeTaskSub: "Write 20 simple vocabulary or formula flashcards."
+            },
+            movie: {
+              type: "Movie Segment",
+              title: "Little Forest",
+              sub: "Soothing nature & cooking film",
+              link: "https://www.primevideo.com",
+              recipeTitle: "Little Forest & 4 Lecture Summaries",
+              recipeTaskDetail: "4 Lecture Summaries",
+              recipeTaskSub: "Summarize 4 key lecture concepts during the segment."
+            },
+            music: {
+              type: "Amazon Music Album",
+              title: "Folklore (Taylor Swift)",
+              sub: "Cozy indie-folk on Amazon Music",
+              link: AMAZON_MUSIC_URL,
+              recipeTitle: "Folklore & Practice Questions",
+              recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions",
+              recipeTaskSub: "Solve 20 practice questions alongside calming tracks."
+            }
+          }
+        },
+        worried: {
+          title: "Too Stimulated & Worried",
+          options: {
+            drama: { type: "Asian Drama", title: "Hidden Love", sub: "Engaging romance drama", link: "https://www.netflix.com", recipeTitle: "Hidden Love & 20 Flashcards", recipeTaskDetail: "Make 20 Flashcards", recipeTaskSub: "Draft 20 flashcards to channel extra restless energy." },
+            book: { type: "Book Recommendation", title: "Heaven Official's Blessing", sub: "Immersive fantasy from your reading list", link: GOODREADS_URL, recipeTitle: "Fantasy Sprint & 5 Priorities", recipeTaskDetail: "Read 30 Pages & Make 5 Priorities", recipeTaskSub: "Read 30 pages and organize tomorrow with 5 clear priorities." },
+            movie: { type: "Movie Segment", title: "Spider-Man: Into the Spider-Verse", sub: "Visually captivating dynamic film", link: "https://www.netflix.com", recipeTitle: "Spider-Verse & 4 Lecture Summaries", recipeTaskDetail: "4 Lecture Summaries", recipeTaskSub: "Distill 4 complex lecture topics into clean summaries." },
+            music: { type: "Amazon Music Album", title: "1989 (Taylor's Version)", sub: "Upbeat pop focus on Amazon Music", link: AMAZON_MUSIC_URL, recipeTitle: "1989 Album & 20 Practice Questions", recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions", recipeTaskSub: "Power through 20 practice questions with high-rhythm beats." }
+          }
+        },
+        anxious: {
+          title: "Overwhelmed & Anxious",
+          options: {
+            drama: { type: "Asian Drama", title: "When the Weather is Fine", sub: "Quiet countryside vibe", link: "https://www.viki.com", recipeTitle: "Quiet Drama & 20 Flashcards", recipeTaskDetail: "Make 20 Flashcards", recipeTaskSub: "Draft 20 review flashcards during slow, calm scenes." },
+            book: { type: "Book Recommendation", title: "Days at the Morisaki Bookshop", sub: "Gentle cozy bookstore read", link: GOODREADS_URL, recipeTitle: "Bookshop Read & 5 Priorities", recipeTaskDetail: "Read 30 Pages & Make 5 Priorities", recipeTaskSub: "Read 30 pages and ground yourself by listing 5 priorities." },
+            movie: { type: "Movie Segment", title: "Paddington 2", sub: "Pure comforting cinematic warmth", link: "https://www.primevideo.com", recipeTitle: "Paddington 2 & 4 Lecture Summaries", recipeTaskDetail: "4 Lecture Summaries", recipeTaskSub: "Write 4 concise lecture summaries during movie breaks." },
+            music: { type: "Amazon Music Album", title: "Evermore (Taylor Swift)", sub: "Grounding acoustic soundscape", link: AMAZON_MUSIC_URL, recipeTitle: "Evermore & Practice Questions", recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions", recipeTaskSub: "Complete 20 practice problems at your own pace." }
+          }
+        },
+        bored: {
+          title: "Restless & Seeking Focus",
+          options: {
+            drama: { type: "Asian Drama", title: "Business Proposal", sub: "Upbeat romantic comedy", link: "https://www.netflix.com", recipeTitle: "Business Proposal & 20 Flashcards", recipeTaskDetail: "Make 20 Flashcards", recipeTaskSub: "Write 20 active recall flashcards while watching." },
+            book: { type: "Book Recommendation", title: "Omniscient Reader's Viewpoint", sub: "High-excitement reading choice", link: GOODREADS_URL, recipeTitle: "Action Reading & 5 Priorities", recipeTaskDetail: "Read 30 Pages & Make 5 Priorities", recipeTaskSub: "Read 30 pages and map out 5 priorities for tomorrow." },
+            movie: { type: "Movie Segment", title: "Knives Out", sub: "Clever mystery storytelling", link: "https://www.primevideo.com", recipeTitle: "Knives Out & 4 Lecture Summaries", recipeTaskDetail: "4 Lecture Summaries", recipeTaskSub: "Write 4 structured lecture summaries during pauses." },
+            music: { type: "Amazon Music Album", title: "Lover (Taylor Swift)", sub: "Vibrant melody focus", link: AMAZON_MUSIC_URL, recipeTitle: "Lover Album & Practice Questions", recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions", recipeTaskSub: "Solve 20 practice questions alongside your favorite tracks." }
+          }
+        },
+        night: {
+          title: "Late Night Quiet Energy",
+          options: {
+            drama: { type: "Asian Drama", title: "Midnight Diner", sub: "Gentle late-night stories", link: "https://www.netflix.com", recipeTitle: "Midnight Diner & 20 Flashcards", recipeTaskDetail: "Make 20 Flashcards", recipeTaskSub: "Draft 20 flashcards for tomorrow's revision." },
+            book: { type: "Book Recommendation", title: "Before the Coffee Gets Cold", sub: "Quiet late-night comfort read", link: GOODREADS_URL, recipeTitle: "Late Night Read & 5 Priorities", recipeTaskDetail: "Read 30 Pages & Make 5 Priorities", recipeTaskSub: "Read 30 pages before sleep and write 5 top priorities." },
+            movie: { type: "Movie Segment", title: "Whisper of the Heart", sub: "Aesthetic Studio Ghibli classic", link: "https://www.netflix.com", recipeTitle: "Whisper of the Heart & 4 Summaries", recipeTaskDetail: "4 Lecture Summaries", recipeTaskSub: "Draft 4 clean lecture summaries." },
+            music: { type: "Amazon Music Album", title: "Midnights (Taylor Swift)", sub: "Late night atmosphere", link: AMAZON_MUSIC_URL, recipeTitle: "Midnights & Practice Questions", recipeTaskDetail: "30 Pages Reading OR 20 Practice Questions", recipeTaskSub: "Work through 20 practice questions before calling it a night." }
+          }
+        }
+      };
+    }
+
     let selectedMoodKey = null;
     let currentRecipe = null;
     let timerSecondsLeft = 30 * 60;
     let timerInterval = null;
     let completedDates = [];
 
-    // Init App
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       loadSavedScratchpad();
       loadCompletedDates();
     });
 
-    // Step 1: Select Mood
     function selectMood(moodKey) {
       selectedMoodKey = moodKey;
-      const moodInfo = MOOD_DATA[moodKey];
+      renderMoodOptions();
+      document.getElementById('mediaSection').classList.remove('hidden');
+      document.getElementById('mediaSection').scrollIntoView({ behavior: 'smooth' });
+    }
 
-      document.getElementById('selectedMoodTitle').innerText = `Options for "${moodInfo.title}"`;
+    function refreshOptions() {
+      if (!selectedMoodKey) return;
+      currentHomesickIndex = (currentHomesickIndex + 1) % HOMESICK_BL_BOOKS.length;
+      currentDanmeiIndex = (currentDanmeiIndex + 1) % DANMEI_BOOKS.length;
+      renderMoodOptions();
+    }
+
+    function renderMoodOptions() {
+      const moodData = getMoodData(selectedMoodKey);
+      document.getElementById('selectedMoodTitle').innerText = `Options for "${moodData.title}"`;
       
       const grid = document.getElementById('mediaCardsGrid');
       grid.innerHTML = '';
 
-      Object.keys(moodInfo.options).forEach(key => {
-        const opt = moodInfo.options[key];
+      Object.keys(moodData.options).forEach(key => {
+        const opt = moodData.options[key];
         
         let iconName = 'tv';
         let badgeColor = 'bg-purple-100 text-purple-800';
@@ -532,7 +424,7 @@
 
         const card = document.createElement('div');
         card.className = "bg-white rounded-2xl p-5 border border-stone-100 card-shadow hover:border-stone-300 transition flex flex-col justify-between gap-4 cursor-pointer group";
-        card.onclick = () => launchSoloDate(moodKey, key);
+        card.onclick = () => launchSoloDate(opt);
 
         card.innerHTML = `
           <div>
@@ -555,14 +447,9 @@
       });
 
       lucide.createIcons();
-
-      document.getElementById('mediaSection').classList.remove('hidden');
-      document.getElementById('mediaSection').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Step 2: Launch Solo Date
-    function launchSoloDate(moodKey, optionKey) {
-      const opt = MOOD_DATA[moodKey].options[optionKey];
+    function launchSoloDate(opt) {
       currentRecipe = opt;
 
       document.getElementById('recipeTitle').innerText = opt.recipeTitle;
@@ -573,7 +460,7 @@
       document.getElementById('recipeTaskSub').innerText = opt.recipeTaskSub;
       
       document.getElementById('externalMediaBtn').href = opt.link;
-      document.getElementById('externalMediaBtnText').innerText = opt.type.includes("Book") ? "View Goodreads Shelf" : (opt.type.includes("Amazon") ? "Open Amazon Music Profile" : "Open Stream");
+      document.getElementById('externalMediaBtnText').innerText = opt.type.includes("Book") ? "View Goodreads Shelf" : (opt.type.includes("Amazon") ? "Open Amazon Profile" : "Open Stream");
 
       document.getElementById('scratchpadTitle').innerHTML = `
         <i data-lucide="edit-3" class="w-4 h-4 text-emerald-500"></i> ${opt.recipeTaskDetail} Workspace
@@ -586,7 +473,6 @@
       lucide.createIcons();
     }
 
-    // Timer Functions
     function setTimerDuration(mins) {
       pauseTimer();
       timerSecondsLeft = mins * 60;
@@ -595,7 +481,6 @@
 
     function startTimer() {
       if (timerInterval) clearInterval(timerInterval);
-      
       document.getElementById('startTimerBtn').disabled = true;
       document.getElementById('pauseTimerBtn').disabled = false;
       document.getElementById('timerStatus').innerText = "Active comfort session running...";
@@ -626,7 +511,6 @@
         `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
     }
 
-    // Complete Solo Date & Log
     function completeSoloDate() {
       if (!currentRecipe) return;
 
@@ -665,7 +549,6 @@
       `).join('');
     }
 
-    // Scratchpad Auto-save
     const scratchpad = document.getElementById('scratchpadInput');
     scratchpad.addEventListener('input', () => {
       localStorage.setItem('solohaven_scratchpad', scratchpad.value);
