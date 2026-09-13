@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoloHaven - Active Comfort Companion</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap');
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #fcfbf9;
+      color: #334155;
+    }
+    .serif {
+      font-family: 'Playfair Display', serif;
+    }
+    .card-shadow {
+      filter: drop-shadow(0px 8px 20px rgba(148, 163, 184, 0.12));
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-pink-100 pb-12">
+
+  <!-- Header -->
+  <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-stone-100 px-4 py-3 sm:px-8">
+    <div class="max-w-4xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 font-bold text-lg shadow-sm">
+          S
+        </div>
+        <div>
+          <h1 class="serif text-2xl font-bold tracking-tight text-stone-800">SoloHaven</h1>
+          <p class="text-[10px] text-stone-400 font-medium tracking-wider uppercase">Active Comfort & Calming Sanctuary</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="resetAppBtn" class="text-xs text-stone-400 hover:text-stone-600 px-3 py-1.5 rounded-full border border-stone-200 hover:bg-stone-50 transition">
+          Reset Mood
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-4xl mx-auto w-full px-4 sm:px-6 pt-6 flex-1 flex flex-col gap-8">
+
+    <!-- STEP 1: MOOD SELECTOR -->
+    <section id="moodSection" class="bg-white rounded-3xl p-6 sm:p-8 card-shadow border border-stone-100 text-center">
+      <span class="text-xs font-bold text-rose-400 uppercase tracking-widest">Step 1</span>
+      <h2 class="serif text-2xl font-bold text-stone-800 mt-1 mb-2">How are you feeling right now?</h2>
+      <p class="text-xs text-stone-500 max-w-md mx-auto mb-6">Select your state of mind to get a personalized 30–45 minute active comfort date.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+        <button onclick="selectMood('homesick')" class="p-4 rounded-2xl border border-pink-100 bg-pink-50/40 hover:bg-pink-100/60 transition text-left flex items-start gap-3 group">
+          <span class="text-2xl">🌸</span>
+          <div>
+            <div class="text-sm font-bold text-stone-800 group-hover:text-pink-900">Homesick & Missing Home</div>
+            <div class="text-[11px] text-stone-500 mt-0.5">Warm, comforting, gentle grounding energy.</div>
+          </div>
+        </button>
+
+        <button onclick="selectMood('blank')" class="p-4 rounded-2xl border border-purple-100 bg-purple-50/40 hover:bg-purple-100/60 transition text-left flex items-start gap-3 group">
+          <span class="text-2xl">🌫️</span>
+          <div>
+            <div class="text-sm font-bold text-stone-800 group-hover:text-purple-900">Feeling Blank & Depressed</div>
+            <div class="text-[11px] text-stone-500 mt-0.5">Low barrier, comforting distraction without pressure.</div>
+          </div>
+        </button>
+
+        <button onclick="selectMood('worried')" class="p-4 rounded-2xl border border-amber-100 bg-amber-50/40 hover:bg-amber-100/60 transition text-left flex items-start gap-3 group">
+          <span class="text-2xl">⚡</span>
+          <div>
+            <div class="text-sm font-bold text-stone-800 group-hover:text-amber-900">Too Stimulated & Worried</div>
+            <div class="text-[11px] text-stone-500 mt-0.5">Double-brained tasks to quiet racing thoughts.</div>
+          </div>
+        </button>
+
+        <button onclick="selectMood('anxious')" class="p-4 rounded-2xl border border-sky-100 bg-sky-50/40 hover:bg-sky-100/60 transition text-left flex items-start gap-3 group">
+          <span class="text-2xl">🌧️</span>
+          <div>
+            <div class="text-sm font-bold text-stone-800 group-hover:text-sky-900">Overwhelmed & Anxious</div>
+            <div class="text-[11px] text-stone-500 mt-0.5">Slow-paced calming focus & light structure.</div>
+          </div>
+        </button>
+
+        <button onclick="selectMood('bored')" class="p-4 rounded-2xl border border-emerald-100 bg-emerald-50/40 hover:bg-emerald-100/60 transition text-left flex items-start gap-3 group">
+          <span class="text-2xl">🍃</span>
+          <div>
+            <div class="text-sm font-bold text-stone-800 group-hover:text-emerald-900">Restless & Seeking Focus</div>
+            <div class="text-[11px] text-stone-500 mt-0.5">Engaging media paired with productivity.</div>
+          </div>
+        </button>
+
+        <button onclick="selectMood('night')" class="p-4 rounded-2xl border border-indigo-100 bg-indigo-50/40 hover:bg-indigo-100/60 transition text-left flex items-start gap-3 group">
+          <span class="text-2xl">🌙</span>
+          <div>
+            <div class="text-sm font-bold text-stone-800 group-hover:text-indigo-900">Late Night Quiet Energy</div>
+            <div class="text-[11px] text-stone-500 mt-0.5">Peaceful, cozy hostel room rituals.</div>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 2: 4-WAY MEDIA OPTIONS (Hidden initially) -->
+    <section id="mediaSection" class="hidden flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-xs font-bold text-rose-400 uppercase tracking-widest">Step 2</span>
+          <h3 id="selectedMoodTitle" class="serif text-xl font-bold text-stone-800">Pick your Active Comfort Medium</h3>
+        </div>
+        <span class="text-xs bg-rose-50 text-rose-700 font-semibold px-3 py-1 rounded-full border border-rose-100">
+          Target Time: 30–45 mins
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="mediaCardsGrid">
+        <!-- Populated dynamically by JS -->
+      </div>
+    </section>
+
+    <!-- STEP 3: ACTIVE SOLO DATE DASHBOARD (Hidden initially) -->
+    <section id="dateDashboard" class="hidden flex flex-col gap-6">
+      
+      <!-- Date Recipe Card -->
+      <div class="bg-gradient-to-br from-stone-900 to-stone-800 text-white rounded-3xl p-6 sm:p-8 card-shadow relative overflow-hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-stone-700/60 pb-5 mb-5">
+          <div>
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest flex items-center gap-1.5 mb-1">
+              <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i> Your 30–45 Min Active Comfort Recipe
+            </span>
+            <h2 id="recipeTitle" class="serif text-2xl font-bold text-white">---</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <a id="externalMediaBtn" href="#" target="_blank" class="px-4 py-2 bg-emerald-400 hover:bg-emerald-300 text-stone-950 font-bold text-xs rounded-xl transition flex items-center gap-1.5 shadow-sm">
+              <span>Open Media</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Media Focus -->
+          <div class="bg-stone-800/70 rounded-2xl p-4 border border-stone-700/50">
+            <div class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <i data-lucide="tv" class="w-3.5 h-3.5 text-rose-300"></i> What to Watch / Listen / Read
+            </div>
+            <div id="recipeMediaDetail" class="text-sm font-semibold text-stone-100 mb-1">---</div>
+            <div id="recipeMediaSub" class="text-xs text-stone-400">---</div>
+          </div>
+
+          <!-- Active Task Focus -->
+          <div class="bg-stone-800/70 rounded-2xl p-4 border border-stone-700/50">
+            <div class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <i data-lucide="check-square" class="w-3.5 h-3.5 text-emerald-300"></i> Active Companion Task
+            </div>
+            <div id="recipeTaskDetail" class="text-sm font-semibold text-emerald-200 mb-1">---</div>
+            <div id="recipeTaskSub" class="text-xs text-stone-400">---</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Built-In Comfort Tools Workspace -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- TOOL 1: Built-in 30-45m Focus Timer -->
+        <div class="lg:col-span-5 bg-white rounded-3xl p-6 border border-stone-100 card-shadow flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-xs font-bold text-stone-400 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="timer" class="w-4 h-4 text-stone-600"></i> Date Timer
+              </span>
+              <div class="flex gap-1">
+                <button onclick="setTimerDuration(30)" class="text-[11px] font-semibold px-2 py-0.5 rounded bg-stone-100 hover:bg-stone-200 text-stone-700">30m</button>
+                <button onclick="setTimerDuration(45)" class="text-[11px] font-semibold px-2 py-0.5 rounded bg-stone-100 hover:bg-stone-200 text-stone-700">45m</button>
+              </div>
+            </div>
+
+            <div class="text-center my-4">
+              <div id="timerDisplay" class="text-5xl font-extrabold font-mono tracking-tight text-stone-800">
+                30:00
+              </div>
+              <p id="timerStatus" class="text-xs text-stone-400 mt-2">Ready for your active comfort sprint</p>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center gap-2 mt-4">
+            <button id="startTimerBtn" onclick="startTimer()" class="px-5 py-2 bg-stone-800 hover:bg-stone-700 text-white font-semibold text-xs rounded-xl transition flex items-center gap-1.5">
+              <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i> Start Session
+            </button>
+            <button id="pauseTimerBtn" onclick="pauseTimer()" disabled class="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 disabled:opacity-40 font-semibold text-xs rounded-xl transition">
+              Pause
+            </button>
+            <button id="completeDateBtn" onclick="completeSoloDate()" class="px-4 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 font-semibold text-xs rounded-xl transition flex items-center gap-1">
+              <i data-lucide="check" class="w-3.5 h-3.5"></i> Finish
+            </button>
+          </div>
+        </div>
+
+        <!-- TOOL 2: Interactive Productivity Scratchpad (Questions / To-Do / Summaries) -->
+        <div class="lg:col-span-7 bg-white rounded-3xl p-6 border border-stone-100 card-shadow flex flex-col gap-3">
+          <div class="flex justify-between items-center">
+            <span id="scratchpadTitle" class="text-xs font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1.5">
+              <i data-lucide="edit-3" class="w-4 h-4 text-emerald-500"></i> Active Task Scratchpad
+            </span>
+            <span class="text-[11px] text-stone-400">Auto-saved to your browser</span>
+          </div>
+
+          <textarea id="scratchpadInput" placeholder="Draft your practice questions, summaries, or top priorities here..." class="w-full h-44 p-3.5 text-xs bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-200 font-mono text-stone-700 resize-none custom-scrollbar"></textarea>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- COMPLETED DATES LOG -->
+    <section class="bg-white rounded-3xl p-6 border border-stone-100 card-shadow">
+      <h3 class="serif text-base font-bold text-stone-800 mb-3 flex items-center justify-between">
+        <span class="flex items-center gap-2">
+          <i data-lucide="heart" class="w-4 h-4 text-rose-400"></i> Completed Solo Dates
+        </span>
+        <span id="dateCountBadge" class="text-xs bg-stone-100 text-stone-600 px-2 py-0.5 rounded-full font-mono font-bold">0</span>
+      </h3>
+
+      <div id="completedDatesList" class="flex flex-col gap-2 max-h-48 overflow-y-auto custom-scrollbar">
+        <p class="text-xs text-stone-400 italic py-2 text-center">No solo dates logged yet. Complete your first session above!</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Data Matrix: Moods -> Media Options -> Recipes
+    const MOOD_DATA = {
+      homesick: {
+        title: "Homesick & Seeking Warmth",
+        options: {
+          drama: {
+            type: "Asian Drama",
+            title: "Reply 1988 or Meet Yourself",
+            sub: "Warm slice-of-life comfort dramas",
+            link: "https://www.viki.com",
+            recipeTitle: "Drama & Question Making Sprint",
+            recipeMediaDetail: "Watch 1 episode of a comforting slice-of-life drama.",
+            recipeTaskDetail: "Practice Question Drafting",
+            recipeTaskSub: "During slow scenes or pauses, draft 5–8 potential test questions from your current class notes."
+          },
+          book: {
+            type: "Goodreads Book",
+            title: "Cozy Fiction or Gentle Essays",
+            sub: "Search heartwarming Goodreads recommendations",
+            link: "https://www.goodreads.com/shelf/show/cozy",
+            recipeTitle: "Nook Reading & Tomorrow's Priorities",
+            recipeMediaDetail: "Read 15–20 pages of your cozy fiction book.",
+            recipeTaskDetail: "Top 5 Priority To-Do List",
+            recipeTaskSub: "When you finish reading, list your 5 clear priorities for tomorrow."
+          },
+          movie: {
+            type: "Movie Segment",
+            title: "Studio Ghibli (e.g. My Neighbor Totoro)",
+            sub: "30–45 mins of aesthetic cinema",
+            link: "https://www.netflix.com",
+            recipeTitle: "Cinema & Lecture Summary",
+            recipeMediaDetail: "Watch a 35-minute segment of a serene movie.",
+            recipeTaskDetail: "Lecture Summary Sprint",
+            recipeTaskSub: "Write a 5-bullet clean summary of today's most difficult lecture."
+          },
+          music: {
+            type: "Amazon Music",
+            title: "Aesthetic Acoustic / Lofi Soundtracks",
+            sub: "Soft instrumental warmth on Amazon Music",
+            link: "https://music.amazon.com",
+            recipeTitle: "Acoustic Beats & Question Practice",
+            recipeMediaDetail: "Play soft instrumental acoustics on Amazon Music.",
+            recipeTaskDetail: "Question Practice",
+            recipeTaskSub: "Solve 5–10 textbook practice problems with headphones on."
+          }
+        }
+      },
+      blank: {
+        title: "Feeling Blank & Depressed",
+        options: {
+          drama: {
+            type: "Asian Drama",
+            title: "Hospital Playlist / Hometown Cha-Cha-Cha",
+            sub: "Low stakes, comforting human connection",
+            link: "https://www.netflix.com",
+            recipeTitle: "Low-Pressure Drama & Question Draft",
+            recipeMediaDetail: "Watch 35 minutes of a gentle drama.",
+            recipeTaskDetail: "Simple Flashcard / Question Making",
+            recipeTaskSub: "Write just 5 simple key definitions or questions in your scratchpad."
+          },
+          book: {
+            type: "Goodreads Book",
+            title: "Graphic Novels or Illustrated Fiction",
+            sub: "Low cognitive barrier books on Goodreads",
+            link: "https://www.goodreads.com/shelf/show/graphic-novels",
+            recipeTitle: "Visual Reading & Gentle To-Do List",
+            recipeMediaDetail: "Read a light graphic novel or short story.",
+            recipeTaskDetail: "Gentle To-Do List",
+            recipeTaskSub: "Write down 3 tiny tasks for tomorrow (e.g. drink water, attend 10am class)."
+          },
+          movie: {
+            type: "Movie Segment",
+            title: "Little Forest or Paddington 2",
+            sub: "Soothing visual comfort movies",
+            link: "https://www.primevideo.com",
+            recipeTitle: "Cozy Movie & Lecture Refresh",
+            recipeMediaDetail: "Enjoy 30 minutes of cozy visuals.",
+            recipeTaskDetail: "Lecture Summary",
+            recipeTaskSub: "Summarize just 1 main concept from today's study material."
+          },
+          music: {
+            type: "Amazon Music",
+            title: "Ambient Ambient Ambient / Rain & Piano",
+            sub: "Zero-pressure comforting soundscapes",
+            link: "https://music.amazon.com",
+            recipeTitle: "Ambient Piano & Light Reading",
+            recipeMediaDetail: "Listen to calm ambient rain and piano.",
+            recipeTaskDetail: "Light Reading / Problem Set",
+            recipeTaskSub: "Skim 5 pages of your textbook without stressing over memorization."
+          }
+        }
+      },
+      worried: {
+        title: "Too Stimulated & Worried",
+        options: {
+          drama: {
+            type: "Asian Drama",
+            title: "Fast-Paced Mystery / Sci-Fi Drama",
+            sub: "Engages your brain completely to stop overthinking",
+            link: "https://www.viki.com",
+            recipeTitle: "Engaging Drama & Active Question Making",
+            recipeMediaDetail: "Watch 40 minutes of an intriguing mystery drama episode.",
+            recipeTaskDetail: "Rapid Question Drafting",
+            recipeTaskSub: "Write down 10 practice questions for an upcoming exam to channel your nervous energy."
+          },
+          book: {
+            type: "Goodreads Book",
+            title: "Gripping Thriller or Fast Page-Turner",
+            sub: "High-engagement Goodreads picks",
+            link: "https://www.goodreads.com/shelf/show/thriller",
+            recipeTitle: "Page-Turner & Daily Priority Reset",
+            recipeMediaDetail: "Read 2 chapters of a fast-paced book.",
+            recipeTaskDetail: "Structure Your Day (To-Do List)",
+            recipeTaskSub: "Channel restless thoughts by writing a strict hour-by-hour to-do list for tomorrow."
+          },
+          movie: {
+            type: "Movie Segment",
+            title: "Visually Captivating Sci-Fi / Action",
+            sub: "High visual focus movie segment",
+            link: "https://www.netflix.com",
+            recipeTitle: "Cinema & Structured Lecture Summary",
+            recipeMediaDetail: "Watch 35 minutes of a visually immersive film.",
+            recipeTaskDetail: "Structured Lecture Summary",
+            recipeTaskSub: "Convert complex lecture notes into a clean 3-part summary."
+          },
+          music: {
+            type: "Amazon Music",
+            title: "Upbeat Lofi / Synthwave Focus",
+            sub: "Rhythmic beats on Amazon Music",
+            link: "https://music.amazon.com",
+            recipeTitle: "Upbeat Beats & Intensive Question Practice",
+            recipeMediaDetail: "Play energizing synthwave/lofi beats.",
+            recipeTaskDetail: "Active Question Practice",
+            recipeTaskSub: "Power through 10 rapid practice questions."
+          }
+        }
+      },
+      anxious: {
+        title: "Overwhelmed & Anxious",
+        options: {
+          drama: {
+            type: "Asian Drama",
+            title: "When the Weather is Fine",
+            sub: "Slow, peaceful countryside vibe",
+            link: "https://www.viki.com",
+            recipeTitle: "Calming Drama & Slow Question Draft",
+            recipeMediaDetail: "Watch 30 minutes of quiet countryside drama.",
+            recipeTaskDetail: "Gentle Question Making",
+            recipeTaskSub: "Draft 5 calm review questions for your studies."
+          },
+          book: {
+            type: "Goodreads Book",
+            title: "Mindfulness or Nature Essays",
+            sub: "Calming reads on Goodreads",
+            link: "https://www.goodreads.com/shelf/show/mindfulness",
+            recipeTitle: "Mindful Reading & Calming To-Do List",
+            recipeMediaDetail: "Read 15 pages of soothing literature.",
+            recipeTaskDetail: "Priorities & Boundary List",
+            recipeTaskSub: "Write 3 essential tasks and 2 things you will NOT worry about tomorrow."
+          },
+          movie: {
+            type: "Movie Segment",
+            title: "Nature Documentary (e.g. Our Planet)",
+            sub: "Peaceful visuals & soft narration",
+            link: "https://www.netflix.com",
+            recipeTitle: "Nature Film & Key Summary",
+            recipeMediaDetail: "Watch 30 mins of soothing nature visuals.",
+            recipeTaskDetail: "Lecture Concept Summary",
+            recipeTaskSub: "Summarize 1 core topic in plain language."
+          },
+          music: {
+            type: "Amazon Music",
+            title: "Nature Sounds & Soft Strings",
+            sub: "Grounding soundscapes on Amazon Music",
+            link: "https://music.amazon.com",
+            recipeTitle: "Grounding Strings & Focused Reading",
+            recipeMediaDetail: "Listen to cello/violin & forest ambient.",
+            recipeTaskDetail: "Textbook Reading & Problem Practice",
+            recipeTaskSub: "Read 1 textbook chapter section steadily."
+          }
+        }
+      },
+      bored: {
+        title: "Restless & Seeking Focus",
+        options: {
+          drama: {
+            type: "Asian Drama",
+            title: "Business Proposal / Extra-ordinary You",
+            sub: "Fun, lighthearted, entertaining energy",
+            link: "https://www.netflix.com",
+            recipeTitle: "Fun Drama & Question Sprint",
+            recipeMediaDetail: "Watch 1 fun episode.",
+            recipeTaskDetail: "Practice Question Sprint",
+            recipeTaskSub: "Write 8 challenge questions for your study group or self-quiz."
+          },
+          book: {
+            type: "Goodreads Book",
+            title: "Popular Sci-Fi or Fantasy Worldbuilding",
+            sub: "Immersive reads on Goodreads",
+            link: "https://www.goodreads.com/shelf/show/fantasy",
+            recipeTitle: "Fantasy Reading & Goal Setting",
+            recipeMediaDetail: "Read 20 pages of exciting fiction.",
+            recipeTaskDetail: "Tomorrow's Action Plan",
+            recipeTaskSub: "List 5 high-impact tasks for tomorrow."
+          },
+          movie: {
+            type: "Movie Segment",
+            title: "Clever Heist / Mystery Movie",
+            sub: "Fast-paced storytelling segment",
+            link: "https://www.primevideo.com",
+            recipeTitle: "Mystery Movie & Lecture Breakdown",
+            recipeMediaDetail: "Watch 35 minutes of a mystery film.",
+            recipeTaskDetail: "Lecture Breakdown & Summary",
+            recipeTaskSub: "Draft a cheat-sheet summary of key formulas/facts."
+          },
+          music: {
+            type: "Amazon Music",
+            title: "Video Game Soundtracks (e.g. Zelda / Persona)",
+            sub: "Focus-boosting OSTs on Amazon Music",
+            link: "https://music.amazon.com",
+            recipeTitle: "Game OST & High-Focus Practice",
+            recipeMediaDetail: "Listen to instrumental game soundtracks.",
+            recipeTaskDetail: "Question Practice Sets",
+            recipeTaskSub: "Work through a set of 10 practice problems."
+          }
+        }
+      },
+      night: {
+        title: "Late Night Quiet Energy",
+        options: {
+          drama: {
+            type: "Asian Drama",
+            title: "My Mister / Midnight Diner",
+            sub: "Quiet, reflective late night atmosphere",
+            link: "https://www.netflix.com",
+            recipeTitle: "Midnight Drama & Quiet Question Prep",
+            recipeMediaDetail: "Watch 30 minutes of a quiet night drama.",
+            recipeTaskDetail: "Quiet Question Draft",
+            recipeTaskSub: "Draft 5 questions to ask your professor/TA tomorrow."
+          },
+          book: {
+            type: "Goodreads Book",
+            title: "Poetry or Short Story Collections",
+            sub: "Gentle late night Goodreads reads",
+            link: "https://www.goodreads.com/shelf/show/poetry",
+            recipeTitle: "Night Reading & Morning To-Do List",
+            recipeMediaDetail: "Read 10 short poems or 1 short story.",
+            recipeTaskDetail: "Morning Routine To-Do List",
+            recipeTaskSub: "Write down your exact morning routine & top 3 priorities."
+          },
+          movie: {
+            type: "Movie Segment",
+            title: "Classic Black & White or Indie Film",
+            sub: "Soft lighting, gentle audio",
+            link: "https://www.youtube.com",
+            recipeTitle: "Indie Cinema & Nightly Notes Summary",
+            recipeMediaDetail: "Watch 30 minutes of a quiet film.",
+            recipeTaskDetail: "Nightly Summary Note",
+            recipeTaskSub: "Summarize today's main takeaway in 3 sentences."
+          },
+          music: {
+            type: "Amazon Music",
+            title: "Midnight Rain & Lofi Chill",
+            sub: "Deep relaxation on Amazon Music",
+            link: "https://music.amazon.com",
+            recipeTitle: "Midnight Lofi & Light Practice",
+            recipeMediaDetail: "Play soft rain and lofi beats.",
+            recipeTaskDetail: "Gentle Practice / Reading",
+            recipeTaskSub: "Review 5 flashcards or skim 1 chapter before sleep."
+          }
+        }
+      }
+    };
+
+    // State Variables
+    let selectedMoodKey = null;
+    let currentRecipe = null;
+    let timerSecondsLeft = 30 * 60;
+    let timerInterval = null;
+    let completedDates = [];
+
+    // Init App
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      loadSavedScratchpad();
+      loadCompletedDates();
+
+      document.getElementById('resetMoodBtn').addEventListener('click', resetApp);
+    });
+
+    // Step 1: Select Mood
+    function selectMood(moodKey) {
+      selectedMoodKey = moodKey;
+      const moodInfo = MOOD_DATA[moodKey];
+
+      document.getElementById('selectedMoodTitle').innerText = `Comfort Options for "${moodInfo.title}"`;
+      
+      const grid = document.getElementById('mediaCardsGrid');
+      grid.innerHTML = '';
+
+      Object.keys(moodInfo.options).forEach(key => {
+        const opt = moodInfo.options[key];
+        
+        let iconName = 'tv';
+        let badgeColor = 'bg-purple-100 text-purple-800';
+        if (key === 'book') { iconName = 'book-open'; badgeColor = 'bg-emerald-100 text-emerald-800'; }
+        if (key === 'movie') { iconName = 'film'; badgeColor = 'bg-amber-100 text-amber-800'; }
+        if (key === 'music') { iconName = 'music'; badgeColor = 'bg-sky-100 text-sky-800'; }
+
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-2xl p-5 border border-stone-100 card-shadow hover:border-stone-300 transition flex flex-col justify-between gap-4 cursor-pointer group";
+        card.onclick = () => launchSoloDate(moodKey, key);
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${badgeColor}">
+                ${opt.type}
+              </span>
+              <i data-lucide="${iconName}" class="w-4 h-4 text-stone-400 group-hover:text-stone-700 transition"></i>
+            </div>
+            <h4 class="text-sm font-bold text-stone-800 group-hover:text-rose-600 transition">${opt.title}</h4>
+            <p class="text-xs text-stone-500 mt-1">${opt.sub}</p>
+          </div>
+          
+          <div class="pt-3 border-t border-stone-100 flex items-center justify-between text-xs font-semibold text-rose-500">
+            <span>Start Active Comfort Date</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+
+      document.getElementById('mediaSection').classList.remove('hidden');
+      document.getElementById('mediaSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Step 2: Launch Solo Date
+    function launchSoloDate(moodKey, optionKey) {
+      const opt = MOOD_DATA[moodKey].options[optionKey];
+      currentRecipe = opt;
+
+      document.getElementById('recipeTitle').innerText = opt.recipeTitle;
+      document.getElementById('recipeMediaDetail').innerText = `${opt.type}: ${opt.title}`;
+      document.getElementById('recipeMediaSub').innerText = opt.sub;
+      
+      document.getElementById('recipeTaskDetail').innerText = opt.recipeTaskDetail;
+      document.getElementById('recipeTaskSub').innerText = opt.recipeTaskSub;
+      
+      document.getElementById('externalMediaBtn').href = opt.link;
+
+      // Update Scratchpad Header Prompt
+      document.getElementById('scratchpadTitle').innerHTML = `
+        <i data-lucide="edit-3" class="w-4 h-4 text-emerald-500"></i> ${opt.recipeTaskDetail} Scratchpad
+      `;
+
+      // Reset Timer to 30 mins
+      setTimerDuration(30);
+
+      document.getElementById('dateDashboard').classList.remove('hidden');
+      document.getElementById('dateDashboard').scrollIntoView({ behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    // Timer Functions
+    function setTimerDuration(mins) {
+      pauseTimer();
+      timerSecondsLeft = mins * 60;
+      updateTimerDisplay();
+    }
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      
+      document.getElementById('startTimerBtn').disabled = true;
+      document.getElementById('pauseTimerBtn').disabled = false;
+      document.getElementById('timerStatus').innerText = "Active comfort session running...";
+
+      timerInterval = setInterval(() => {
+        if (timerSecondsLeft > 0) {
+          timerSecondsLeft--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          document.getElementById('timerStatus').innerText = "Session Complete! Well done!";
+          alert("Your 30–45 minute active comfort session is complete! Great job taking care of yourself.");
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      document.getElementById('startTimerBtn').disabled = false;
+      document.getElementById('pauseTimerBtn').disabled = true;
+      document.getElementById('timerStatus').innerText = "Timer paused";
+    }
+
+    function updateTimerDisplay() {
+      const m = Math.floor(timerSecondsLeft / 60);
+      const s = timerSecondsLeft % 60;
+      document.getElementById('timerDisplay').innerText = 
+        `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+
+    // Complete Solo Date & Log
+    function completeSoloDate() {
+      if (!currentRecipe) return;
+
+      const dateRecord = {
+        id: 'date_' + Date.now(),
+        title: currentRecipe.recipeTitle,
+        type: currentRecipe.type,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        date: new Date().toLocaleDateString()
+      };
+
+      completedDates.unshift(dateRecord);
+      saveCompletedDates();
+      renderCompletedDates();
+      alert("Logged to your completed Solo Dates!");
+    }
+
+    function renderCompletedDates() {
+      const list = document.getElementById('completedDatesList');
+      document.getElementById('dateCountBadge').innerText = completedDates.length;
+
+      if (completedDates.length === 0) {
+        list.innerHTML = `<p class="text-xs text-stone-400 italic py-2 text-center">No solo dates logged yet. Complete your first session above!</p>`;
+        return;
+      }
+
+      list.innerHTML = completedDates.map(d => `
+        <div class="flex items-center justify-between p-3 rounded-2xl bg-stone-50 border border-stone-100 text-xs">
+          <div class="flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span class="font-bold text-stone-800">${escapeHtml(d.title)}</span>
+            <span class="text-[10px] bg-stone-200/60 text-stone-600 px-2 py-0.5 rounded-full font-mono">${d.type}</span>
+          </div>
+          <span class="text-[11px] text-stone-400 font-mono">${d.date} at ${d.timestamp}</span>
+        </div>
+      `).join('');
+    }
+
+    // Scratchpad Auto-save
+    const scratchpad = document.getElementById('scratchpadInput');
+    scratchpad.addEventListener('input', () => {
+      localStorage.setItem('solohaven_scratchpad', scratchpad.value);
+    });
+
+    function loadSavedScratchpad() {
+      const saved = localStorage.getItem('solohaven_scratchpad');
+      if (saved) scratchpad.value = saved;
+    }
+
+    function loadCompletedDates() {
+      const saved = localStorage.getItem('solohaven_dates');
+      completedDates = saved ? JSON.parse(saved) : [];
+      renderCompletedDates();
+    }
+
+    function saveCompletedDates() {
+      localStorage.setItem('solohaven_dates', JSON.stringify(completedDates));
+    }
+
+    function resetApp() {
+      document.getElementById('mediaSection').classList.add('hidden');
+      document.getElementById('dateDashboard').classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        }[m];
+      });
+    }
+  </script>
+</body>
+</html>
