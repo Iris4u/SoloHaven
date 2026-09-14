@@ -1,709 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoloHaven — Soft Active Comfort</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* Dynamic Soft Light Color Palette Variables */
-            --bg-base: #f7f4ef;
-            --bg-card: rgba(255, 255, 255, 0.75);
-            --text-primary: #2e332f;
-            --text-secondary: #656d67;
-            --accent-soft: #e5ece6;
-            --accent-border: #d0ded3;
-            --shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.03);
-            --radius-main: 24px;
-            --radius-sm: 16px;
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SoloHaven | Cozy Focus & Mood Matcher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #fcf8f6;
+      --card-bg: #ffffff;
+      --text-main: #2b2625;
+      --text-muted: #786f6c;
+      --accent-soft: #e8d5c4;
+      --accent-active: #d4a373;
+      --border-color: #f0ece9;
+      --radius-lg: 18px;
+      --radius-sm: 10px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    }
 
-        /* 6 Aesthetic Soft-Light Color Palettes per Mood */
-        body[data-mood="blank"] {
-            --bg-base: #f5f2f5;
-            --accent-soft: #eae3ed;
-            --accent-border: #d8cde0;
-        }
-        body[data-mood="overwhelmed"] {
-            --bg-base: #f2f5f7;
-            --accent-soft: #e1e9ee;
-            --accent-border: #cad7e0;
-        }
-        body[data-mood="homesick"] {
-            --bg-base: #f9f4f0;
-            --accent-soft: #f4e7df;
-            --accent-border: #e6d3c7;
-        }
-        body[data-mood="stimulated"] {
-            --bg-base: #f5f7f2;
-            --accent-soft: #e5ede3;
-            --accent-border: #cfdecb;
-        }
-        body[data-mood="restless"] {
-            --bg-base: #faf5ee;
-            --accent-soft: #f5e9d8;
-            --accent-border: #ebd5bc;
-        }
-        body[data-mood="latenight"] {
-            --bg-base: #f0f2f7;
-            --accent-soft: #dfa8ef;
-            --accent-soft: #e1e5f2;
-            --accent-border: #c8cfe3;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+    .app-container {
+      width: 100%;
+      max-width: 850px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
 
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 24px 16px;
-            transition: var(--transition-smooth);
-        }
+    header {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      color: #3a2e2b;
+    }
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
 
-        .app-container {
-            width: 100%;
-            max-width: 880px;
-            background: var(--bg-card);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: var(--radius-main);
-            padding: 40px;
-            box-shadow: var(--shadow-soft);
-            transition: var(--transition-smooth);
-        }
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
 
-        header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.3rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-        }
+    /* Mood Grid */
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .mood-btn {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .mood-btn:hover, .mood-btn.active {
+      border-color: var(--accent-active);
+      background: #fcf4ec;
+      transform: translateY(-2px);
+    }
+    .mood-btn h4 { font-size: 0.95rem; margin-bottom: 4px; }
+    .mood-btn p { font-size: 0.8rem; color: var(--text-muted); }
 
-        p.subtitle {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            font-weight: 400;
-        }
+    /* Controls & Dynamic Scaling */
+    .config-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 600px) { .config-grid { grid-template-columns: 1fr; } }
+    
+    label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px; }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      background: var(--bg-main);
+      font-family: inherit;
+    }
 
-        .section-title {
-            font-size: 0.82rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-            font-weight: 600;
-        }
+    /* Recommendation Matrix */
+    .recommendations-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 600px) { .recommendations-grid { grid-template-columns: 1fr; } }
 
-        /* 6 Mood Grid */
-        .mood-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            margin-bottom: 36px;
-        }
+    .rec-card {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      background: var(--bg-main);
+      position: relative;
+    }
+    .rec-card .tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      color: var(--accent-active);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .rec-card h3 { font-size: 1rem; margin-bottom: 4px; }
+    .rec-card p { font-size: 0.82rem; color: var(--text-muted); }
 
-        .mood-btn {
-            background: rgba(255, 255, 255, 0.55);
-            border: 1px solid var(--accent-border);
-            padding: 14px 16px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
+    .action-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent-active);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .action-btn:hover { background: #c29363; }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+    }
+    .btn-secondary:hover { background: var(--bg-main); color: var(--text-main); }
 
-        .mood-btn:hover {
-            background: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 14px rgba(0,0,0,0.03);
-        }
+    /* Timer Screen & Buffer */
+    .timer-display {
+      font-size: 3.5rem;
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      margin: 20px 0;
+      color: #3a2e2b;
+    }
+    .buffer-overlay {
+      display: none;
+      text-align: center;
+      background: #faf6f0;
+      padding: 30px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--accent-soft);
+    }
+    .buffer-overlay.active { display: block; }
 
-        .mood-btn.active {
-            background: var(--text-primary);
-            color: #ffffff;
-            border-color: var(--text-primary);
-        }
-
-        /* Dynamic Options Grid */
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-            gap: 16px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            border-radius: var(--radius-sm);
-            padding: 22px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: var(--transition-smooth);
-            cursor: pointer;
-            min-height: 170px;
-        }
-
-        .card:hover {
-            background: #ffffff;
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
-            border-color: var(--accent-border);
-        }
-
-        .card-type {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .card-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-            line-height: 1.35;
-        }
-
-        .card-meta {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-            line-height: 1.4;
-        }
-
-        .card-action {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        /* Active Cozy Date View */
-        .date-view {
-            display: none;
-            background: #ffffff;
-            border-radius: var(--radius-sm);
-            padding: 32px;
-            border: 1px solid var(--accent-border);
-            animation: fadeIn 0.4s ease;
-        }
-
-        .date-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--accent-soft);
-        }
-
-        .date-tag {
-            display: inline-block;
-            background: var(--accent-soft);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .date-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-        }
-
-        .recipe-box {
-            background: var(--bg-base);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            margin-bottom: 24px;
-            transition: var(--transition-smooth);
-        }
-
-        .recipe-task {
-            font-weight: 600;
-            font-size: 1.05rem;
-            margin-bottom: 6px;
-        }
-
-        .recipe-desc {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        .external-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--accent-soft);
-            color: var(--text-primary);
-            text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            transition: var(--transition-smooth);
-        }
-
-        .external-btn:hover {
-            background: var(--accent-border);
-        }
-
-        .timer-container {
-            text-align: center;
-            padding: 24px 0;
-            background: rgba(247, 245, 240, 0.5);
-            border-radius: var(--radius-sm);
-            margin-bottom: 24px;
-        }
-
-        .timer-display {
-            font-size: 3rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            margin: 10px 0;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .timer-btn {
-            background: var(--text-primary);
-            color: #ffffff;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .timer-btn:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
-        }
-
-        .done-btn {
-            width: 100%;
-            background: var(--text-primary);
-            color: #ffffff;
-            border: none;
-            padding: 16px;
-            border-radius: var(--radius-sm);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .done-btn:hover {
-            opacity: 0.92;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        }
-
-        .hidden { display: none !important; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 600px) {
-            .app-container { padding: 24px; }
-            .mood-grid { grid-template-columns: 1fr; }
-            .options-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    .hidden { display: none !important; }
+  </style>
 </head>
-<body data-mood="blank">
+<body>
 
-<div class="app-container">
+  <div class="app-container">
     <header>
-        <h1>SoloHaven</h1>
-        <p class="subtitle">Gentle active-comfort pairings for low-stress focus</p>
+      <h1>SoloHaven</h1>
+      <p>Cognitive Load Matchmaker & Cozy Focus Companion</p>
     </header>
 
-    <!-- Main View -->
-    <div id="main-view">
-        <div class="section-title">Select your current mood</div>
-        <div class="mood-grid" id="mood-selector"></div>
+    <!-- STEP 1: Mood & Subject Selection -->
+    <div id="step-setup" class="card">
+      <div class="section-title">
+        <span>1. Select Mental State & Track</span>
+        <button class="btn-secondary" style="padding: 4px 10px; font-size: 0.8rem; border-radius: 6px;" onclick="app.refreshSelections()">🎲 Refresh Options</button>
+      </div>
 
-        <div class="section-title">Choose your active pairing</div>
-        <div class="options-grid" id="options-container"></div>
+      <div class="mood-grid">
+        <div class="mood-btn active" onclick="app.setTrack('analytical', this)">
+          <h4>1. Analytical Track</h4>
+          <p>Math, Engineering Mechanics · High Numerical Load</p>
+        </div>
+        <div class="mood-btn" onclick="app.setTrack('conceptual', this)">
+          <h4>2. Conceptual Track</h4>
+          <p>Chemistry, Ecology · Recall & Definitions</p>
+        </div>
+        <div class="mood-btn" onclick="app.setTrack('logic', this)">
+          <h4>3. Logic & Debugging Track</h4>
+          <p>DSA, Programming, Electronics · Circuits & Code</p>
+        </div>
+        <div class="mood-btn" onclick="app.setTrack('synthesis', this)">
+          <h4>4. Theory & Synthesis Track</h4>
+          <p>Physics, Communication · Reading & Summaries</p>
+        </div>
+      </div>
+
+      <div class="config-grid">
+        <div>
+          <label>Dynamic Effort Scaling (Intensity)</label>
+          <select id="intensity-select" onchange="app.updateTaskEstimate()">
+            <option value="light">Light Review (Low Load)</option>
+            <option value="standard" selected>Standard Practice (Moderate Load)</option>
+            <option value="heavy">Heavy Derivations (High Load)</option>
+          </select>
+        </div>
+        <div>
+          <label>Session Mode</label>
+          <select id="duration-select" onchange="app.updateTaskEstimate()">
+            <option value="30">30-Min Micro Sprint</option>
+            <option value="60" selected>60-Min Subject Immersion</option>
+          </select>
+        </div>
+      </div>
     </div>
 
-    <!-- Active Cozy Date View -->
-    <div id="date-view" class="date-view">
-        <div class="date-header">
-            <div>
-                <span class="date-tag" id="view-type">Media</span>
-                <h2 class="date-title" id="view-title">Title</h2>
-                <div class="card-meta" id="view-meta" style="margin-top: 4px;">Meta</div>
-            </div>
-            <button onclick="resetToMain()" style="background:none; border:none; cursor:pointer; color:var(--text-secondary); font-size: 1.2rem;">✕</button>
+    <!-- STEP 2: Media & Adaptive Task Pairings -->
+    <div id="step-pairings" class="card">
+      <div class="section-title">2. Your Matched Recommendations</div>
+      <div class="recommendations-grid">
+        <div class="rec-card">
+          <span class="tag">Music Pairing</span>
+          <h3 id="rec-music-title">---</h3>
+          <p id="rec-music-desc">---</p>
         </div>
-
-        <a id="external-link" href="#" target="_blank" class="external-btn">
-            <span>Open Media Platform</span> ↗
-        </a>
-
-        <div class="recipe-box">
-            <div class="recipe-task" id="recipe-task">Task</div>
-            <div class="recipe-desc" id="recipe-desc">Description</div>
+        <div class="rec-card">
+          <span class="tag">Drama Pick</span>
+          <h3 id="rec-drama-title">---</h3>
+          <p id="rec-drama-desc">---</p>
         </div>
-
-        <div class="timer-container">
-            <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);">Focus Session</div>
-            <div class="timer-display" id="timer-display">35:00</div>
-            <button class="timer-btn" id="timer-btn" onclick="toggleTimer()">Start Timer</button>
+        <div class="rec-card">
+          <span class="tag">Book Recommendation</span>
+          <h3 id="rec-book-title">---</h3>
+          <p id="rec-book-desc">---</p>
         </div>
+        <div class="rec-card">
+          <span class="tag">Movie Comfort</span>
+          <h3 id="rec-movie-title">---</h3>
+          <p id="rec-movie-desc">---</p>
+        </div>
+      </div>
 
-        <button class="done-btn" onclick="completeCozyDate()">Complete Cozy Date & Refresh Options</button>
+      <div style="margin-top: 18px; padding: 14px; background: var(--bg-main); border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+        <label style="margin-bottom: 2px;">Adaptive Study Goal Target</label>
+        <p id="target-task-display" style="font-weight: 600; color: #3a2e2b; font-size: 0.95rem;">---</p>
+      </div>
+
+      <button class="action-btn" onclick="app.startSession()">Start Cozy Focus Session</button>
     </div>
-</div>
 
-<script>
-    // Full Dynamic Recommendation Pool for 6 Moods (Soft Light Aesthetic & Soft Smooth Transitions)
-    const moodData = {
-        blank: {
-            label: "Blank & Depressed",
-            icon: "🌫️",
-            books: [
-                { title: "Disabled Tyrant's Beloved Pet Fish", meta: "Cozy Xianxia / Low-Stakes Comedy", query: "Disabled Tyrants Beloved Pet Fish Goodreads" },
-                { title: "The House in the Cerulean Sea", meta: "Warm / Gentle Comfort Fiction", query: "The House in the Cerulean Sea Goodreads" },
-                { title: "Legends & Lattes", meta: "Low Stakes Cozy Fantasy", query: "Legends and Lattes Goodreads" }
-            ],
-            dramas: [
-                { title: "Meet Yourself", meta: "Slice of Life / Slow Pace Healing", query: "Meet Yourself Asian Drama" },
-                { title: "When the Weather is Fine", meta: "Cozy / Quiet Winter Vibe", query: "When the Weather is Fine Drama" },
-                { title: "Hospital Playlist", meta: "Warm Comfort Friendships", query: "Hospital Playlist Drama" }
-            ],
-            movies: [
-                { title: "My Neighbor Totoro", meta: "Studio Ghibli / Gentle Aesthetic", query: "My Neighbor Totoro Movie" },
-                { title: "Little Forest", meta: "Cozy Cooking / Slow Living", query: "Little Forest Movie" },
-                { title: "Whisper of the Heart", meta: "Warm Nostalgia / Quiet Focus", query: "Whisper of the Heart Movie" }
-            ],
-            music: [
-                { title: "folklore (Acoustic / Instrumental)", meta: "Taylor Swift / Gentle & Quiet", query: "Taylor Swift folklore Acoustic Amazon Music" },
-                { title: "K-Pop Lofi Chill Beats", meta: "Soft K-Pop Instrumental Study", query: "Kpop Lofi Chill Beats Amazon Music" },
-                { title: "Quiet Piano & Soft Strings", meta: "Minimal & Calming", query: "Quiet Piano Amazon Music" }
-            ]
-        },
-        overwhelmed: {
-            label: "Overwhelmed & Anxious",
-            icon: "🌧️",
-            books: [
-                { title: "Before the Coffee Gets Cold", meta: "Short Chapters / Quiet Speculative", query: "Before the Coffee Gets Cold Goodreads" },
-                { title: "The Travelling Cat Chronicles", meta: "Heartwarming / Calming Pace", query: "Travelling Cat Chronicles Goodreads" },
-                { title: "Tuesdays with Morrie", meta: "Gentle Reflections", query: "Tuesdays with Morrie Goodreads" }
-            ],
-            dramas: [
-                { title: "Reply 1988", meta: "Nostalgic / Comforting Family", query: "Reply 1988 Drama" },
-                { title: "Hometown Cha-Cha-Cha", meta: "Seaside Town / Uplifting", query: "Hometown Cha Cha Cha Drama" },
-                { title: "Weightlifting Fairy Kim Bok-joo", meta: "Warm Youth & Humor", query: "Weightlifting Fairy Kim Bok Joo Drama" }
-            ],
-            movies: [
-                { title: "Kiki's Delivery Service", meta: "Soft Encouragement / Cozy", query: "Kikis Delivery Service Movie" },
-                { title: "Ponyo", meta: "Visually Soothing / Gentle", query: "Ponyo Movie" },
-                { title: "Amélie", meta: "Whimsical & Heartwarming", query: "Amelie Movie" }
-            ],
-            music: [
-                { title: "evermore (Instrumental Sessions)", meta: "Taylor Swift / Deep Comfort", query: "Taylor Swift evermore Instrumental Amazon Music" },
-                { title: "K-Indie Acoustic Chill", meta: "Mellow Korean Indie Melodies", query: "K-Indie Acoustic Amazon Music" },
-                { title: "Soft Rain & Ambient Synth", meta: "Grounding Low Energy", query: "Ambient Rain Amazon Music" }
-            ]
-        },
-        homesick: {
-            label: "Homesick & Seeking Warmth",
-            icon: "🌸",
-            books: [
-                { title: "Days at the Morisaki Bookshop", meta: "Cozy Community / Reading", query: "Days at the Morisaki Bookshop Goodreads" },
-                { title: "What You Are Looking For Is in the Library", meta: "Uplifting Interconnected Stories", query: "What You Are Looking For Is in the Library Goodreads" },
-                { title: "Sweet Bean Paste", meta: "Gentle Friendship & Culinary Warmth", query: "Sweet Bean Paste Goodreads" }
-            ],
-            dramas: [
-                { title: "Summer Strike", meta: "Quiet Countryside Living", query: "Summer Strike Drama" },
-                { title: "One Day Off", meta: "Short Food & Travel Vignettes", query: "One Day Off Drama" },
-                { title: "Warm and Cozy", meta: "Jeju Island Comfort", query: "Warm and Cozy Drama" }
-            ],
-            movies: [
-                { title: "Our Little Sister", meta: "Warm Family & Food", query: "Our Little Sister Movie" },
-                { title: "Kamome Diner", meta: "Cozy Cafe Life", query: "Kamome Diner Movie" },
-                { title: "The Secret World of Arrietty", meta: "Peaceful Aesthetic", query: "Arrietty Movie" }
-            ],
-            music: [
-                { title: "K-Pop Piano Lullabies", meta: "Soft Piano Covers of K-Pop", query: "Kpop Piano Covers Amazon Music" },
-                { title: "Lover (Acoustic & Soft Beats)", meta: "Taylor Swift / Warm Nostalgia", query: "Taylor Swift Lover Acoustic Amazon Music" },
-                { title: "Warm Cafe Jazz Piano", meta: "Cozy Afternoon Vibe", query: "Cafe Jazz Piano Amazon Music" }
-            ]
-        },
-        stimulated: {
-            label: "Too Stimulated & Worried",
-            icon: "⚡",
-            books: [
-                { title: "Convenience Store Woman", meta: "Short / Grounding Realism", query: "Convenience Store Woman Goodreads" },
-                { title: "Klara and the Sun", meta: "Thoughtful / Steady Pacing", query: "Klara and the Sun Goodreads" },
-                { title: "The Memory Police", meta: "Quiet & Atmospheric", query: "The Memory Police Goodreads" }
-            ],
-            dramas: [
-                { title: "Run On", meta: "Calm Dialogue / Low Stress", query: "Run On Drama" },
-                { title: "My Liberation Notes", meta: "Grounding / Slow Paced", query: "My Liberation Notes Drama" },
-                { title: "Because This Is My First Life", meta: "Quiet Co-living Comfort", query: "Because This Is My First Life Drama" }
-            ],
-            movies: [
-                { title: "Paterson", meta: "Quiet Routine / Peaceful", query: "Paterson Movie" },
-                { title: "Perfect Days", meta: "Mindful Living / Soothing", query: "Perfect Days Movie" },
-                { title: "Lost in Translation", meta: "Quiet Atmosphere", query: "Lost in Translation Movie" }
-            ],
-            music: [
-                { title: "Midnight Taylor Swift Chillhop", meta: "Soft Ambient Taylor Swift Remixes", query: "Taylor Swift Midnights Chillhop Amazon Music" },
-                { title: "Binaural K-Pop Study Drift", meta: "Focus Alpha Waves + Soft K-Beats", query: "Kpop Study Lofi Amazon Music" },
-                { title: "432Hz Deep Focus Drone", meta: "Brainwave Grounding", query: "432Hz Focus Drone Amazon Music" }
-            ]
-        },
-        restless: {
-            label: "Restless & Seeking Focus",
-            icon: "🌙",
-            books: [
-                { title: "Butter", meta: "Engaging Narrative / Food & Mystery", query: "Butter Asako Yuzuki Goodreads" },
-                { title: "The Cat Who Saved Books", meta: "Charming & Motivating", query: "The Cat Who Saved Books Goodreads" },
-                { title: "Welcome to the Hyunam-dong Bookshop", meta: "Warm Purpose & Growth", query: "Welcome to the Hyunam dong Bookshop Goodreads" }
-            ],
-            dramas: [
-                { title: "Fight for My Way", meta: "Lighthearted Youth & Focus", query: "Fight For My Way Drama" },
-                { title: "Twinkling Watermelon", meta: "Uplifting & Vibrant Comfort", query: "Twinkling Watermelon Drama" },
-                { title: "Twenty-Five Twenty-One", meta: "Inspiring & Energetic", query: "Twenty Five Twenty One Drama" }
-            ],
-            movies: [
-                { title: "Chef", meta: "Fun & Comforting Creative Journey", query: "Chef Movie" },
-                { title: "Julie & Julia", meta: "Motivating Cooking & Writing", query: "Julie and Julia Movie" },
-                { title: "The Way Way Back", meta: "Gentle Growth Story", query: "The Way Way Back Movie" }
-            ],
-            music: [
-                { title: "Taylor Swift Upbeat Acoustic", meta: "1989 / Red Soft Acoustic Covers", query: "Taylor Swift Acoustic Hits Amazon Music" },
-                { title: "K-Pop Instrumental Focus Beats", meta: "Upbeat Low-BPM K-Pop Beats", query: "Kpop Instrumental Study Amazon Music" },
-                { title: "Upbeat Lofi Coffee Shop", meta: "Gentle Rhythm for Focus", query: "Lofi Coffee Shop Amazon Music" }
-            ]
-        },
-        latenight: {
-            label: "Late Night Quiet Energy",
-            icon: "🌌",
-            books: [
-                { title: "The Midnight Library", meta: "Reflective / Gentle Speculative", query: "The Midnight Library Goodreads" },
-                { title: "Strange Weather in Tokyo", meta: "Soft Evening Reading", query: "Strange Weather in Tokyo Goodreads" },
-                { title: "She and Her Cat", meta: "Short & Heartwarming Stories", query: "She and Her Cat Goodreads" }
-            ],
-            dramas: [
-                { title: "Soundtrack #1", meta: "Short 4-Episode Cozy Music Drama", query: "Soundtrack 1 Drama" },
-                { title: "Tell Me That You Love Me", meta: "Quiet Visual Romance", query: "Tell Me That You Love Me Drama" },
-                { title: "A Piece of Your Mind", meta: "Gentle Night Atmosphere", query: "A Piece of Your Mind Drama" }
-            ],
-            movies: [
-                { title: "5 Centimeters per Second", meta: "Quiet Visual Atmosphere", query: "5 Centimeters per Second Movie" },
-                { title: "Before Sunrise", meta: "Gentle Late Night Dialogue", query: "Before Sunrise Movie" },
-                { title: "The Garden of Words", meta: "Rainy Night Aesthetics", query: "The Garden of Words Movie" }
-            ],
-            music: [
-                { title: "Taylor Swift Midnight Sleep Ambience", meta: "Soft Strings & Rain", query: "Taylor Swift Lofi Sleep Amazon Music" },
-                { title: "K-Drama OST Quiet Piano", meta: "Midnight K-Drama Instrumental", query: "KDrama OST Piano Amazon Music" },
-                { title: "Late Night Rain & Vinyl", meta: "Soft Deep Comfort", query: "Late Night Rain Vinyl Amazon Music" }
-            ]
-        }
+    <!-- STEP 3: Focus Session HUD -->
+    <div id="step-focus" class="card hidden">
+      <div class="section-title">
+        <span>Focus Session Active</span>
+        <span id="session-track-label" style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">---</span>
+      </div>
+
+      <div class="timer-display" id="timer-readout">60:00</div>
+
+      <div style="display: flex; gap: 10px;">
+        <button class="action-btn btn-secondary" onclick="app.toggleTimer()" id="pause-btn">Pause</button>
+        <button class="action-btn" onclick="app.triggerCoolDown()">Complete Session & Cool-Down</button>
+      </div>
+    </div>
+
+    <!-- COOL-DOWN BUFFER OVERLAY (Fix #3) -->
+    <div id="step-buffer" class="card buffer-overlay">
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 8px;">60-Second Cool-Down Buffer</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Fading out active dopamine inputs... Grounding your focus for the next block.</p>
+      
+      <div class="timer-display" id="buffer-readout" style="font-size: 2.5rem;">01:00</div>
+      
+      <div style="margin-top: 15px; padding: 12px; background: #fff; border-radius: var(--radius-sm); border: 1px solid var(--border-color); text-align: left;">
+        <span style="font-size: 0.75rem; color: var(--accent-active); font-weight: 700; text-transform: uppercase;">Up Next Preview</span>
+        <p id="next-preview-text" style="font-weight: 600; margin-top: 4px; font-size: 0.9rem;">Reviewing lecture notes & preparing next practice set.</p>
+      </div>
+      
+      <button class="action-btn" style="margin-top: 20px;" onclick="app.finishBuffer()">Done & Unlock Next Phase</button>
+    </div>
+
+  </div>
+
+  <script>
+    const database = {
+      analytical: {
+        music: ["Taylor Swift: Red (Taylor's Version)", "Taylor Swift: 1989 (Taylor's Version)", "Taylor Swift: Folklore", "Taylor Swift: Evermore", "Taylor Swift: Lover", "Taylor Swift: Midnights", "Taylor Swift: TTPD"],
+        dramas: ["Hidden Love", "First Frost", "Amidst a Snowstorm of Love"],
+        books: ["Puckboys Series", "Fake Boyfriend Series", "Sports Romance Pick"],
+        movies: ["Spirited Away", "Howl's Moving Castle", "10 Things I Hate About You"],
+        tasks: { light: "10 Quick Concept Questions", standard: "20 Practice Numericals", heavy: "30 Multi-Step Derivation Problems" }
+      },
+      conceptual: {
+        music: ["BLACKPINK & LE SSERAFIM Mix", "Stray Kids & ENHYPEN Focus Bops", "NewJeans & TWICE Energy Playlist", "aespa & TXT Recall Tracks"],
+        dramas: ["Dear X", "Missing Peace", "Historical C-Drama Xianxia Pick"],
+        books: ["Soft-core Romance Pick", "New Adult Fiction Pick"],
+        movies: ["Kiki's Delivery Service", "How to Lose a Guy in 10 Days"],
+        tasks: { light: "15 Recall Flashcards", standard: "30 Concept Flashcards", heavy: "50 Flashcards + Chapter Diagram Summary" }
+      },
+      logic: {
+        music: ["Chris Grey & Artemas Vibe", "Dutch Melrose & Austin Giorgio", "Chase Atlantic Dark Pop", "The Weeknd & Arctic Monkeys"],
+        dramas: ["Wuju Bakery", "Khemjira", "Knot", "Love Is Poison"],
+        books: ["Dark Romance Vault Pick", "BL Romance Focus Pick"],
+        movies: ["Crazy Rich Asians", "Set It Up"],
+        tasks: { light: "5 Priority Code Debugs", standard: "20 Algorithm / Logic Problems", heavy: "30 Complex DSA / Circuit Derivations" }
+      },
+      synthesis: {
+        music: ["Sabrina Carpenter Hits", "Jennie & Ariana Grande Aesthetic Pop", "Tate McRae & Olivia Rodrigo", "Dua Lipa & Billie Eilish"],
+        dramas: ["Goddess of Death", "Kill to Love", "Revenged Love"],
+        books: ["Disabled Tyrant's Beloved Pet Fish", "Heaven Official's Blessing", "Danmei Masterpiece Pick"],
+        movies: ["The Proposal", "Ghibli Aesthetic Classics"],
+        tasks: { light: "4 Concise Lecture Summaries", standard: "30 Reading Pages + Priorities List", heavy: "Full Chapter Deep Reading & Synthesis Log" }
+      }
     };
 
-    // Date Recipe Mappings
-    const recipeMappings = {
-        book: {
-            typeTag: "Book Reading",
-            taskTitle: "📝 Reading & To-Do List Recipe (30–45 Mins)",
-            desc: "Read at your own pace for 30–35 minutes. Spend the final 10 minutes pausing to write down a clear top-5 priority list or task outline for tomorrow.",
-            getLink: (q) => `https://www.goodreads.com/search?q=${encodeURIComponent(q)}`
-        },
-        drama: {
-            typeTag: "Asian Drama",
-            taskTitle: "❓ Drama Watching & Question Making Recipe (30–45 Mins)",
-            desc: "Enjoy one episode or a 30-45 minute segment. During quiet scenes or pauses, draft 5-10 active recall practice questions based on your recent studies.",
-            getLink: (q) => `https://www.google.com/search?q=${encodeURIComponent(q)}`
-        },
-        movie: {
-            typeTag: "Movie Segment",
-            taskTitle: "📑 Movie & Lecture Summary Recipe (30–45 Mins)",
-            desc: "Watch a 30-45 minute segment of the movie. As you watch, keep a notepad nearby to summarize today's lecture key takeaways into brief bullet points.",
-            getLink: (q) => `https://www.google.com/search?q=${encodeURIComponent(q)}`
-        },
-        music: {
-            typeTag: "Music / Soundscape",
-            taskTitle: "📖 Soundscape & Reading / Question Practice Recipe (30–45 Mins)",
-            desc: "Play the soundscape in the background and immerse yourself in 30-45 minutes of dedicated textbook reading or active question practice set resolution.",
-            getLink: (q) => `https://music.amazon.com/search/${encodeURIComponent(q)}`
-        }
-    };
+    class SoloHavenApp {
+      constructor() {
+        this.currentTrack = 'analytical';
+        this.timer = null;
+        this.bufferTimer = null;
+        this.timeLeft = 3600;
+        this.bufferLeft = 60;
+        this.isRunning = false;
+        this.init();
+      }
 
-    let currentMood = 'blank';
-    let timerInterval = null;
-    let timerSeconds = 35 * 60;
-    let isTimerRunning = false;
+      init() {
+        this.refreshSelections();
+      }
 
-    // Soft Helper: Dynamically pick 1 item without hardcoding
-    function getRandomItem(array) {
+      getRandom(array) {
         return array[Math.floor(Math.random() * array.length)];
-    }
+      }
 
-    // Render 6 Mood Selection Buttons
-    function initMoods() {
-        const moodContainer = document.getElementById('mood-selector');
-        moodContainer.innerHTML = '';
+      setTrack(trackKey, element) {
+        document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+        this.currentTrack = trackKey;
+        this.refreshSelections();
+      }
+
+      refreshSelections() {
+        const data = database[this.currentTrack];
+        document.getElementById('rec-music-title').innerText = this.getRandom(data.music);
+        document.getElementById('rec-music-desc').innerText = "Matched to cognitive flow for " + this.currentTrack;
+        document.getElementById('rec-drama-title').innerText = this.getRandom(data.dramas);
+        document.getElementById('rec-drama-desc').innerText = "Curated Drama Vault Selection";
+        document.getElementById('rec-book-title').innerText = this.getRandom(data.books);
+        document.getElementById('rec-book-desc').innerText = "Curated Reading Vault Pick";
+        document.getElementById('rec-movie-title').innerText = this.getRandom(data.movies);
+        document.getElementById('rec-movie-desc').innerText = "Aesthetic Film Selection";
+        this.updateTaskEstimate();
+      }
+
+      updateTaskEstimate() {
+        const intensity = document.getElementById('intensity-select').value;
+        const duration = document.getElementById('duration-select').value;
+        const taskText = database[this.currentTrack].tasks[intensity];
+        document.getElementById('target-task-display').innerText = `${duration}-Min Session Target: ${taskText}`;
+      }
+
+      startSession() {
+        const duration = parseInt(document.getElementById('duration-select').value);
+        this.timeLeft = duration * 60;
+        document.getElementById('step-setup').classList.add('hidden');
+        document.getElementById('step-pairings').classList.add('hidden');
+        document.getElementById('step-focus').classList.remove('hidden');
+        document.getElementById('session-track-label').innerText = this.currentTrack.toUpperCase() + " TRACK";
         
-        Object.keys(moodData).forEach(key => {
-            const m = moodData[key];
-            const btn = document.createElement('button');
-            btn.className = `mood-btn ${key === currentMood ? 'active' : ''}`;
-            btn.innerHTML = `<span>${m.icon}</span> <span>${m.label}</span>`;
-            btn.onclick = () => {
-                currentMood = key;
-                document.body.setAttribute('data-mood', key);
-                initMoods();
-                renderOptions();
-            };
-            moodContainer.appendChild(btn);
-        });
-    }
+        this.updateTimerDisplay();
+        this.isRunning = true;
+        this.timer = setInterval(() => this.tick(), 1000);
+      }
 
-    // Dynamic Option Generator: Picks fresh recommendations from the 4 categories whenever called
-    function renderOptions() {
-        const container = document.getElementById('options-container');
-        container.innerHTML = '';
-
-        const data = moodData[currentMood];
-        const categories = [
-            { key: 'book', label: '📖 Book', pool: data.books },
-            { key: 'drama', label: '📺 Asian Drama', pool: data.dramas },
-            { key: 'movie', label: '🎬 Movie Segment', pool: data.movies },
-            { key: 'music', label: '🎧 Music / Soundscape', pool: data.music }
-        ];
-
-        categories.forEach(cat => {
-            const selectedItem = getRandomItem(cat.pool);
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <div>
-                    <div class="card-type">${cat.label}</div>
-                    <div class="card-title">${selectedItem.title}</div>
-                    <div class="card-meta">${selectedItem.meta}</div>
-                </div>
-                <div class="card-action">Start Cozy Date ➔</div>
-            `;
-            card.onclick = () => openCozyDate(cat.key, selectedItem);
-            container.appendChild(card);
-        });
-    }
-
-    // Open Date Experience View
-    function openCozyDate(categoryKey, item) {
-        const recipe = recipeMappings[categoryKey];
-
-        document.getElementById('main-view').classList.add('hidden');
-        document.getElementById('date-view').style.display = 'block';
-
-        document.getElementById('view-type').innerText = recipe.typeTag;
-        document.getElementById('view-title').innerText = item.title;
-        document.getElementById('view-meta').innerText = item.meta;
-
-        document.getElementById('recipe-task').innerText = recipe.taskTitle;
-        document.getElementById('recipe-desc').innerText = recipe.desc;
-
-        const extBtn = document.getElementById('external-link');
-        extBtn.href = recipe.getLink(item.query || item.title);
-
-        resetTimer(35);
-    }
-
-    // Navigation and completion handlers
-    function resetToMain() {
-        stopTimer();
-        document.getElementById('date-view').style.display = 'none';
-        document.getElementById('main-view').classList.remove('hidden');
-    }
-
-    function completeCozyDate() {
-        resetToMain();
-        renderOptions(); // Dynamically generates brand new options upon completion
-    }
-
-    // Focus Timer Controls
-    function updateTimerDisplay() {
-        const mins = Math.floor(timerSeconds / 60);
-        const secs = timerSeconds % 60;
-        document.getElementById('timer-display').innerText = 
-            `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    }
-
-    function toggleTimer() {
-        if (isTimerRunning) {
-            stopTimer();
+      tick() {
+        if (this.timeLeft > 0) {
+          this.timeLeft--;
+          this.updateTimerDisplay();
         } else {
-            isTimerRunning = true;
-            document.getElementById('timer-btn').innerText = 'Pause Timer';
-            timerInterval = setInterval(() => {
-                if (timerSeconds > 0) {
-                    timerSeconds--;
-                    updateTimerDisplay();
-                } else {
-                    stopTimer();
-                    alert("Cozy focus session complete! Take a soft breath.");
-                }
-            }, 1000);
+          this.triggerCoolDown();
         }
+      }
+
+      toggleTimer() {
+        if (this.isRunning) {
+          clearInterval(this.timer);
+          document.getElementById('pause-btn').innerText = "Resume";
+        } else {
+          this.timer = setInterval(() => this.tick(), 1000);
+          document.getElementById('pause-btn').innerText = "Pause";
+        }
+        this.isRunning = !this.isRunning;
+      }
+
+      updateTimerDisplay() {
+        const m = Math.floor(this.timeLeft / 60).toString().padStart(2, '0');
+        const s = (this.timeLeft % 60).toString().padStart(2, '0');
+        document.getElementById('timer-readout').innerText = `${m}:${s}`;
+      }
+
+      triggerCoolDown() {
+        clearInterval(this.timer);
+        this.isRunning = false;
+        document.getElementById('step-focus').classList.add('hidden');
+        document.getElementById('step-buffer').classList.add('active');
+        
+        this.bufferLeft = 60;
+        this.bufferTimer = setInterval(() => {
+          if (this.bufferLeft > 0) {
+            this.bufferLeft--;
+            const s = this.bufferLeft.toString().padStart(2, '0');
+            document.getElementById('buffer-readout').innerText = `00:${s}`;
+          } else {
+            this.finishBuffer();
+          }
+        }, 1000);
+      }
+
+      finishBuffer() {
+        clearInterval(this.bufferTimer);
+        document.getElementById('step-buffer').classList.remove('active');
+        document.getElementById('step-setup').classList.remove('hidden');
+        document.getElementById('step-pairings').classList.remove('hidden');
+        this.refreshSelections();
+      }
     }
 
-    function stopTimer() {
-        clearInterval(timerInterval);
-        isTimerRunning = false;
-        document.getElementById('timer-btn').innerText = 'Start Timer';
-    }
-
-    function resetTimer(minutes) {
-        stopTimer();
-        timerSeconds = minutes * 60;
-        updateTimerDisplay();
-    }
-
-    // Initial Execution
-    document.body.setAttribute('data-mood', currentMood);
-    initMoods();
-    renderOptions();
-</script>
+    const app = new SoloHavenApp();
+  </script>
 </body>
 </html>
